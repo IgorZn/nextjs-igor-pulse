@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 function PropertiesPage(props) {
     const router = useRouter();
-    console.log('Hello')
     return (
         <div>
             <div className="text-3xl">Properties Page</div>
