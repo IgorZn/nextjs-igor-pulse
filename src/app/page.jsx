@@ -1,14 +1,16 @@
 import Link from "next/link";
+import Hero from "@/components/Hero";
+import InfoBoxes from "@/components/InfoBoxes";
 
 export const metadata = {
     title: 'Igor Property Pulse Home Page',
 }
 
 const HomePage = (props) => {
-    return <div>
-        <div className="text-3xl">Welcome</div>
-        <Link href="/properties">Show Properties</Link>
-    </div>
+    return <>
+        <Hero />
+        <InfoBoxes />
+    </>
 };
 
 export default HomePage;

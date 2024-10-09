@@ -1,13 +1,14 @@
-import { usb, getDeviceList, Device, Capability } from 'usb';
-let scanner
+import {stdin, stdout} from 'node:process';
 
-usb.on('attach', (device) => {
-    console.log('attach', device)
-    scanner = device.controlTransfer(0x21, 0x9, 0x100, 0x1000, )
+stdin.on('data', data => {
+    stdout.pipe(data)
 })
 
-// usb.on('detach', (device) => {
-//     console.log('detach', device)
-//
-// })
 
+// import HID from 'node-hid';
+//
+// const [barcodeScanner, ...rest] = [...await HID.devicesAsync()]
+//     .filter(device => device.product.includes('Symbol Bar'))
+// console.log(barcodeScanner)
+// const device = await HID.HIDAsync.open(barcodeScanner.path)
+// device.on('data', data => console.log(data))
