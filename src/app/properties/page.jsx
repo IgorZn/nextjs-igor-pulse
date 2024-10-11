@@ -1,7 +1,6 @@
 'use client'
 import {useRouter} from "next/navigation";
 import properties from "@/../properties.json";
-import Link from 'next/link';
 import PropertiesCard from "@/components/PropertiesCard";
 
 

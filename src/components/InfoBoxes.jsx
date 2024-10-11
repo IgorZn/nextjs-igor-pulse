@@ -1,4 +1,3 @@
-import Link from "next/link";
 import InfoBox from "@/components/InfoBox";
 
 function InfoBoxes(props) {
