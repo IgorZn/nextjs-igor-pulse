@@ -5,7 +5,6 @@ import {FaBath, FaBed, FaMoneyBill, FaRulerCombined, FaMapMarker} from "react-ic
 
 
 function PropertiesCard(props) {
-    console.log(props.rates)
     const getRate = (rate) => {
         for(rate of [...Object.keys(props.rates)]) {
             if(rate === 'monthly') {

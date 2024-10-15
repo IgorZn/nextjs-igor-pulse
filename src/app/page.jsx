@@ -9,8 +9,8 @@ export const metadata = {
 
 const HomePage = (props) => {
     return <>
-        <Hero />
-        <InfoBoxes />
+        <Hero/>
+        <InfoBoxes/>
         <HomeProperties properties={properties}/>
     </>
 };

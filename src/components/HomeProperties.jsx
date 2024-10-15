@@ -1,11 +1,11 @@
-import React from 'react';
+import {Suspense} from "react";
 import PropertiesCard from "@/components/PropertiesCard";
 import Link from "next/link";
 
 function HomeProperties({properties}) {
     const recentProperties = properties
-            .sort(() => Math.random() - Math.random())
-            .slice(0, 3);
+        .sort(() => Math.random() - Math.random())
+        .slice(0, 3);
 
 
     return (
@@ -21,7 +21,7 @@ function HomeProperties({properties}) {
                             <p>No properties found.</p>
                         ) : (
                             recentProperties.map((property) => (
-                                <PropertiesCard key={property.id} {...property}/>
+                                <PropertiesCard key={property._id} {...property}/>
                             ))
                         )}
                     </div>
