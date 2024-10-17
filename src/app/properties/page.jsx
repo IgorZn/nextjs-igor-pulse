@@ -1,11 +1,10 @@
 'use client'
-import {useRouter} from "next/navigation";
-import properties from "@/../properties.json";
 import PropertiesCard from "@/components/PropertiesCard";
+import {fetchProperties} from "@/middleware/fetchMethods";
 
 
-function PropertiesPage(props) {
-    const router = useRouter();
+async function PropertiesPage(props) {
+    const properties = await fetchProperties();
     return (
         <>
             <section className={"px-4 py-6"}>
@@ -14,7 +13,7 @@ function PropertiesPage(props) {
                         ? (<p>No properties found.</p>)
                         : (<div className={"grid grid-cols-1 lg:grid-cols-3 gap-6"}>
                             {properties.map((property) => (
-                                <PropertiesCard key={property.id} {...property}/>
+                                <PropertiesCard key={property._id} {...property}/>
                             ))}
                         </div>)}
                 </div>

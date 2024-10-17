@@ -1,8 +1,8 @@
-import {Suspense} from "react";
 import PropertiesCard from "@/components/PropertiesCard";
 import Link from "next/link";
 
 function HomeProperties({properties}) {
+
     const recentProperties = properties
         .sort(() => Math.random() - Math.random())
         .slice(0, 3);

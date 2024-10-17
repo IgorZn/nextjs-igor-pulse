@@ -1,16 +1,15 @@
 import Hero from "@/components/Hero";
 import InfoBoxes from "@/components/InfoBoxes";
 import HomeProperties from "@/components/HomeProperties";
-import properties from "@/../properties.json"
-import connectDB from "@/middleware/mongoDB";
+import {fetchProperties} from "@/middleware/fetchMethods";
 
 export const metadata = {
     title: 'Igor Property Pulse Home Page',
 }
 
-await connectDB()
 
-const HomePage = (props) => {
+const HomePage = async (props) => {
+    const properties = await fetchProperties(process.env.NEXT_PUBLIC_API_URL)
     return <>
         <Hero/>
         <InfoBoxes/>

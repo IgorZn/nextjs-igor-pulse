@@ -86,4 +86,5 @@ const propertySchema = new Schema({
     }
 );
 
-export const Property = mongoose.model("Property", propertySchema)
+export const PropertyModel =
+    mongoose.models.Property || mongoose.model('Property', propertySchema)
