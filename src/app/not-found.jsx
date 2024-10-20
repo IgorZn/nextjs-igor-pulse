@@ -19,8 +19,7 @@ function Custom404(props) {
                         <Link
                             href="/"
                             className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-4 px-6 rounded"
-                        >Go Home</Link
-                        >
+                        >Go Home</Link>
                     </div>
                 </div>
             </div>

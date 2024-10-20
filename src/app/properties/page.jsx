@@ -1,9 +1,8 @@
-'use client'
 import PropertiesCard from "@/components/PropertiesCard";
 import {fetchProperties} from "@/middleware/fetchMethods";
 
 
-async function PropertiesPage(props) {
+const PropertiesPage = async (props) => {
     const properties = await fetchProperties();
     return (
         <>
