@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 import {FaXmark} from "react-icons/fa6";
+import Loading from "@/app/loading";
 
 function Page(props) {
     const {id} = useParams();
@@ -22,7 +23,6 @@ function Page(props) {
     useEffect(() => {
         fetchProperty(id)
             .then((data) => {
-                console.log('>>>>',data._id)
                 if(data._id) {
                     setProperty(data)
                     setLoading(false)
@@ -62,6 +62,7 @@ function Page(props) {
 
     return (
         <>
+            {loading && <Loading />}
             {!loading && property._id && (
                 <>
                     {/*Property Header Image*/}
