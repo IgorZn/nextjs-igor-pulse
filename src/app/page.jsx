@@ -1,7 +1,7 @@
 import Hero from "@/components/Hero";
 import InfoBoxes from "@/components/InfoBoxes";
 import HomeProperties from "@/components/HomeProperties";
-import {fetchProperties} from "@/middleware/fetchMethods";
+import {fetchProperties} from "@/../utils/fetchMethods";
 
 export const metadata = {
     title: 'Igor Property Pulse Home Page',

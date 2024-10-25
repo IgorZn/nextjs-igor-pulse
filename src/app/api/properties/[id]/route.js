@@ -1,9 +1,13 @@
 import {PropertyModel} from "@/../models/Property";
+import connectDB from "@/../utils/mongoDB";
 
 
 
 export const GET = async (request, { params }) => {
-    return await PropertyModel.findById(params.id)
+    await connectDB()
+    const {id} = await params
+
+    return PropertyModel.findById(id)
         .then(data => {
             if(!data) return new Response('Not Found', { status: 404 })
 

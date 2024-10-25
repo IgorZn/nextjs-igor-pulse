@@ -164,7 +164,9 @@ function Navbar(props) {
                                         <span className="sr-only">Open user menu</span>
                                         <Image
                                             className="h-8 w-8 rounded-full"
-                                            src={profileDefault}
+                                            src={session.user.image || profileDefault}
+                                            width={40}
+                                            height={40}
                                             alt=""
                                         />
                                     </button>
@@ -199,6 +201,10 @@ function Navbar(props) {
                                         className={(isProfileDropdownOpen === 'Sign Out' ? 'bg-gray-100 ' : '') + "block px-4 py-2 text-sm text-gray-700"}
                                         role="menuitem"
                                         tabIndex="-1"
+                                        onClick={() => {
+                                            signOut()
+                                            setIsProfileDropdownOpen(false)
+                                        }}
                                         onMouseEnter={() => setIsProfileDropdownOpen('Sign Out')}
                                         onMouseLeave={() => setIsProfileDropdownOpen(false)}
                                         id="user-menu-item-2">Sign Out

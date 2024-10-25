@@ -1,7 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     experimental: {
-        instrumentationHook: true,
+        esmExternals: true,
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '**.googleusercontent.com',
+                port: '',
+                pathname: '**',
+            },
+        ],
     },
 };
 

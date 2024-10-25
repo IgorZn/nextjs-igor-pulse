@@ -3,13 +3,17 @@ import React, {useEffect, useState} from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import {useParams} from "next/navigation";
-import {fetchProperty} from "@/middleware/fetchMethods";
+import {fetchProperty} from "@/../utils/fetchMethods";
 import {
     FaExclamationTriangle,
     FaShare,
     FaBookmark,
     FaPaperPlane,
-    FaArrowLeft, FaBed, FaBath, FaRulerCombined, FaCheck
+    FaArrowLeft,
+    FaBed,
+    FaBath,
+    FaRulerCombined,
+    FaCheck
 } from "react-icons/fa";
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 import {FaXmark} from "react-icons/fa6";

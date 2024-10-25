@@ -1,5 +1,5 @@
 import PropertiesCard from "@/components/PropertiesCard";
-import {fetchProperties} from "@/middleware/fetchMethods";
+import {fetchProperties} from "@/../utils/fetchMethods";
 
 
 const PropertiesPage = async (props) => {
