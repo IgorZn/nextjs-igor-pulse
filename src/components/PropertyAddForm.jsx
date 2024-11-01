@@ -3,35 +3,34 @@ import React, {useEffect, useState} from 'react';
 function PropertyAddForm(props) {
     const [mounted, setMounted] = useState(false);
     const [fields, setFields] = useState({
-        type: "",
-        description: "",
-        name: "",
+        type: "Condo",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        name: "Beautiful Apartment",
         location: {
             street: "",
             city: "",
             state: "",
             zipcode: ""
         },
-        beds: 0,
-        baths: 0,
-        square_feet: 0, // В JavaScript часто используется camelCase
+        beds: 10,
+        baths: 110,
+        square_feet: 110, // В JavaScript часто используется camelCase
         amenities: [],
         rates: {
-            nightly: 0,
-            weekly: 0,
-            monthly: 0
+            nightly: 10,
+            weekly: 20,
+            monthly: 30
         },
         seller_info: {
-            name: "",
-            email: "",
-            phone: ""
+            name: "Igor Zn",
+            email: "test@abc.com",
+            phone: "+7 (911) 123-45-67"
         },
         images: []
     });
 
     const handleAmenitiesChange = (e) => {
         const {name, value} = e.target;
-        console.log(name, value)
         setFields(prevState => {
             const amenities = prevState.amenities.includes(value)
                 ? [...prevState.amenities.filter(item => item !== value)]
@@ -42,14 +41,13 @@ function PropertyAddForm(props) {
                 [name]: amenities,
             }
         })
-    }
+    };
 
     const handleOnChange = (e) => {
         e.preventDefault();
         const {name, value} = e.target
         if(name.includes('.')){
             const [outerKey, innerKey] = name.split('.')
-
             setFields(prevState => ({
                 ...prevState,
                 [outerKey]: {
@@ -65,17 +63,25 @@ function PropertyAddForm(props) {
         }
     };
 
-    console.log(fields)
+    const handleImageChange = (e) => {
+        const { name, files } = e.target;
+
+        setFields(prevState => ({
+            ...prevState,
+            [name]: files
+        }));
+    }
 
     useEffect(() => {
         setMounted(true);
     }, []);
 
-    return mounted && <form onSubmit={() => console.log('form onChange')}>
+    return mounted && <form action="/api/properties" method={"POST"} encType={"multipart/form-data"}>
         <h2 className="text-3xl text-center font-semibold mb-6">
             Add Property
         </h2>
 
+        {/*Property Type*/}
         <div className="mb-4">
             <label
                 htmlFor="type"
@@ -85,6 +91,7 @@ function PropertyAddForm(props) {
                 name="type"
                 className="border rounded w-full py-2 px-3"
                 required
+                value={fields.type}
                 onChange={handleOnChange}>
                 <option value="Apartment"></option>
                 <option value="Apartment">Apartment</option>
@@ -447,7 +454,7 @@ function PropertyAddForm(props) {
             <input
                 type="text"
                 id="seller_name"
-                name="seller_info.name."
+                name="seller_info.name"
                 className="border rounded w-full py-2 px-3"
                 placeholder="Name"
                 value={fields.seller_info.name}
@@ -498,6 +505,8 @@ function PropertyAddForm(props) {
                 className="border rounded w-full py-2 px-3"
                 accept="image/*"
                 multiple
+                required
+                onChange={handleImageChange}
             />
         </div>
 
