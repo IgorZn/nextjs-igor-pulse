@@ -1,7 +1,7 @@
 import {PropertyModel} from "@/../models/Property";
 import connectDB from "../../../../utils/mongoDB";
-import {NextRequest, NextResponse} from "next/server";
-
+import {NextResponse} from "next/server";
+import {getSessionUser} from "../../../../utils/getSessionUser";
 
 
 export const GET = async (request) => {
@@ -20,15 +20,24 @@ export const GET = async (request) => {
 export const POST = async (request) => {
     await connectDB();
     const formData = await request.formData();
-    // console.log(formData)
+
+    // Получаем сессию
+    const {userId, user} = await getSessionUser()
+
+    if(!userId || !user) {
+        return NextResponse.json({message: 'User ID or User not found'}, { status: 401 })
+    }
+
+    // console.log('getServerSession>>>', user)
 
     const images = formData.getAll('images');
     const amenities = formData.getAll('amenities');
 
     const propertyObj = {
         name: formData.get('name'),
+        type: formData.get('type'),
         description: formData.get('description'),
-        images,
+        // images,
         location: {
             street: formData.get('location.street'),
             city: formData.get('location.city'),
@@ -49,15 +58,17 @@ export const POST = async (request) => {
             email: formData.get('seller_info.email'),
             phone: formData.get('seller_info.phone'),
         },
+        owner: userId
     };
 
     // console.log('propertyObj>>>', propertyObj)
 
-    // return await PropertyModel
-    //     .create(propertyObj)
-    //     .then(data => {
-    //         return NextResponse.json({message: 'Success'}, { status: 201 })
-    //     })
-    //     .catch(error => console.log(error));
+    // return NextResponse.json({message: 'Success'}, { status: 201 })
+    return await PropertyModel
+        .create(propertyObj)
+        .then(data => {
+            return NextResponse.redirect(new URL(`/properties/${data._id}`, request.url))
+        })
+        .catch(error => console.log(error));
 
 }

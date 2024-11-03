@@ -39,8 +39,12 @@ export const authOptions = {
         async session({ session, token, user }) {
             await connectDB()
             await User.findOne({email: session.user.email})
-                .then((user) => session.user.id = user._id.toString())
+                .then((user) => {
+                    session.user.id = user._id.toString()
+                    session.user.hui = 'hui'
+                })
 
+            // console.log(session, token, user)
             return session
         }
     }

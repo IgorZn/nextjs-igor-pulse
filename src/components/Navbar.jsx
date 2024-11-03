@@ -40,8 +40,7 @@ function Navbar(props) {
                             className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                             aria-controls="mobile-menu"
                             aria-expanded="false"
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        >
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
                             <span className="absolute -inset-0.5"></span>
                             <span className="sr-only">Open main menu</span>
                             <svg
@@ -50,8 +49,7 @@ function Navbar(props) {
                                 viewBox="0 0 24 24"
                                 strokeWidth="1.5"
                                 stroke="currentColor"
-                                aria-hidden="true"
-                            >
+                                aria-hidden="true">
                                 <path
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
@@ -61,9 +59,7 @@ function Navbar(props) {
                         </button>
                     </div>
 
-                    <div
-                        className="flex flex-1 items-center justify-center md:items-stretch md:justify-start"
-                    >
+                    <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
                         {/*Logo*/}
                         <Link className="flex flex-shrink-0 items-center" href="/">
                             <Image
@@ -76,22 +72,26 @@ function Navbar(props) {
                             >PropertyPulse</span
                             >
                         </Link>
+
                         {/*Desktop Menu Hidden below md screens*/}
                         <div className="hidden md:ml-6 md:block">
                             <div className="flex space-x-2">
                                 <Link
                                     href="/"
-                                    className={activeLink('/', pathName) + "text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"}
-                                >Home</Link>
+                                    className={activeLink('/', pathName) + "text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"}>
+                                    Home
+                                </Link>
                                 <Link
                                     href='/properties'
-                                    className={activeLink('/properties', pathName) + "text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"}
-                                >Properties</Link>
+                                    className={activeLink('/properties', pathName) + "text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"}>
+                                    Properties
+                                </Link>
                                 {session && (
                                     <Link
                                         href="/properties/add"
-                                        className={activeLink('/properties/add', pathName) + "text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"}
-                                    >Add Property</Link>
+                                        className={activeLink('/properties/add', pathName) + "text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"}>
+                                        Add Property
+                                    </Link>
                                 )}
 
                             </div>
@@ -107,8 +107,7 @@ function Navbar(props) {
                                         <button
                                             key={provider.name}
                                             onClick={() => signIn(provider.id)}
-                                            className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
-                                        >
+                                            className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
                                             <FaGoogle className={"text-white mr-2"}/>
                                             <span>Login or Register</span>
                                         </button>
@@ -221,17 +220,20 @@ function Navbar(props) {
                 <div className="space-y-1 px-2 pb-3 pt-2">
                     <Link
                         href="/"
-                        className={activeLink('/', pathName, bgGray900) + "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"}
-                    >Home</Link>
+                        className={activeLink('/', pathName, bgGray900) + "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"}>
+                        Home
+                    </Link>
                     <Link
                         href="/properties"
-                        className={activeLink('/properties', pathName, bgGray900) + "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"}
-                    >Properties</Link>
+                        className={activeLink('/properties', pathName, bgGray900) + "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"}>
+                        Properties
+                    </Link>
                     {session && (
                         <Link
                             href="/properties/add"
                             className={activeLink('/properties/add', pathName, bgGray900) + "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"}>
-                            Add Property</Link>
+                            Add Property
+                        </Link>
                     )}
 
                     {!session && (
