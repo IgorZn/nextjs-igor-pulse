@@ -2,6 +2,9 @@ import {PropertyModel} from "@/../models/Property";
 import connectDB from "../../../../utils/mongoDB";
 import {NextResponse} from "next/server";
 import {getSessionUser} from "../../../../utils/getSessionUser";
+import {cloudinaryConfig} from "../../../../utils/cloudinary";
+import {v2 as cloudinary} from "cloudinary";
+
 
 
 export const GET = async (request) => {
@@ -19,6 +22,8 @@ export const GET = async (request) => {
 
 export const POST = async (request) => {
     await connectDB();
+    await cloudinaryConfig()
+
     const formData = await request.formData();
 
     // Получаем сессию
@@ -33,11 +38,22 @@ export const POST = async (request) => {
     const images = formData.getAll('images');
     const amenities = formData.getAll('amenities');
 
+    // Upload images to Cloudinary
+    const uploadedImages = await Promise.all(images.map(async (image) => {
+        const buffer = Buffer.from(await image.arrayBuffer()).toString('base64');
+        const res = await cloudinary.uploader.upload(
+            'data:image/png;base64,'+buffer, {
+            asset_folder: 'pulse-images'
+        });
+        return res.secure_url;
+    }));
+
+    console.log('uploadedImages>>>', uploadedImages)
+
     const propertyObj = {
         name: formData.get('name'),
         type: formData.get('type'),
         description: formData.get('description'),
-        // images,
         location: {
             street: formData.get('location.street'),
             city: formData.get('location.city'),
@@ -58,6 +74,7 @@ export const POST = async (request) => {
             email: formData.get('seller_info.email'),
             phone: formData.get('seller_info.phone'),
         },
+        images: uploadedImages,
         owner: userId
     };
 

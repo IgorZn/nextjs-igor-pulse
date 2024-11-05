@@ -65,10 +65,11 @@ function PropertyAddForm(props) {
 
     const handleImageChange = (e) => {
         const { name, files } = e.target;
+        const filesArray = Array.from(files)
 
         setFields(prevState => ({
             ...prevState,
-            [name]: files
+            [name]: filesArray
         }));
     }
 
