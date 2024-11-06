@@ -5,7 +5,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || null
 export const fetchProperties = async () => {
     if(!API_URL) return []
 
-    return await fetch(`${API_URL}/api/properties`)
+    return await fetch(`${API_URL}/api/properties`, {cache: 'no-store'})
         .then(data => {
             return data.json();
         })

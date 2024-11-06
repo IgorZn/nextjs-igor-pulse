@@ -5,6 +5,8 @@ import {FaBath, FaBed, FaMoneyBill, FaRulerCombined, FaMapMarker} from "react-ic
 
 
 function PropertiesCard(props) {
+    console.log('PropertiesCard>>',props.images)
+
     const getRate = (rate) => {
         for(rate of [...Object.keys(props.rates)]) {
             if(rate === 'monthly') {
@@ -24,7 +26,7 @@ function PropertiesCard(props) {
         <>
             <div className="rounded-xl shadow-md relative">
                 <Image
-                    src={"/images/properties/" + props.images[0]}
+                    src={props.images[0].startsWith('http') ? props.images[0] : '/images/properties/' + props.images[0]}
                     alt=""
                     width={"500"}
                     height={"50"}
@@ -35,9 +37,7 @@ function PropertiesCard(props) {
                         <div className="text-gray-600">{props.type}</div>
                         <h3 className="text-xl font-bold">{props.name}</h3>
                     </div>
-                    <h3
-                        className="absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right"
-                    >
+                    <h3 className="absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right">
                         ${getRate(props.rates)}
                     </h3>
 

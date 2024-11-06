@@ -18,6 +18,7 @@ import {
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 import {FaXmark} from "react-icons/fa6";
 import Loading from "@/app/loading";
+import PropertyImages from "@/components/PropertyImages";
 
 function Page(props) {
     const {id} = useParams();
@@ -245,6 +246,9 @@ function Page(props) {
                             </div>
                         </div>
                     </section>
+
+                    {/* Property Images */}
+                    <PropertyImages images={property.images} />
                 </>
             )}
         </>
