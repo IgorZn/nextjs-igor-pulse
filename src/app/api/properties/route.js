@@ -1,8 +1,8 @@
 import {PropertyModel} from "@/../models/Property";
-import connectDB from "../../../../utils/mongoDB";
+import connectDB from "@/../utils/mongoDB";
 import {NextResponse} from "next/server";
-import {getSessionUser} from "../../../../utils/getSessionUser";
-import {cloudinaryConfig} from "../../../../utils/cloudinary";
+import {getSessionUser} from "@/../utils/getSessionUser";
+import {cloudinaryConfig} from "@/../utils/cloudinary";
 import {v2 as cloudinary} from "cloudinary";
 
 

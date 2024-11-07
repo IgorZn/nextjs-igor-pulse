@@ -1,6 +1,7 @@
 import {getServerSession} from "next-auth";
 import {authOptions} from "./authProviders";
 
+
 export const getSessionUser = async () => {
     return await getServerSession(authOptions)
         .then(session => {

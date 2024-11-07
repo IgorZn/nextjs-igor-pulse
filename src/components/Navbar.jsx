@@ -68,9 +68,7 @@ function Navbar(props) {
                                 alt="PropertyPulse"
                             />
 
-                            <span className="hidden md:block text-white text-2xl font-bold ml-2"
-                            >PropertyPulse</span
-                            >
+                            <span className="hidden md:block text-white text-2xl font-bold ml-2">PropertyPulse</span>
                         </Link>
 
                         {/*Desktop Menu Hidden below md screens*/}
@@ -93,7 +91,6 @@ function Navbar(props) {
                                         Add Property
                                     </Link>
                                 )}
-
                             </div>
                         </div>
                     </div>
