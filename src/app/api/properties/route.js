@@ -9,7 +9,7 @@ import {v2 as cloudinary} from "cloudinary";
 
 export const GET = async (request) => {
     await connectDB()
-    return await PropertyModel.find({})
+    return await PropertyModel.find({isEnabled: true})
         .then(data => {
             return new Response(JSON.stringify(data), {
                 status: 200
