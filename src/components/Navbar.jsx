@@ -1,32 +1,29 @@
 'use client'
-import Image from "next/image";
+import Image from 'next/image'
 import logo from '@/assets/images/logo-white.png'
 import profileDefault from '@/assets/images/profile.png'
-import Link from "next/link";
-import {FaGoogle} from "react-icons/fa";
-import {useEffect, useState} from "react";
-import {usePathname} from "next/navigation";
-import {signIn, signOut, useSession, getProviders} from "next-auth/react";
+import Link from 'next/link'
+import { FaGoogle } from 'react-icons/fa'
+import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
 function Navbar(props) {
-    const {data: session} = useSession()
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-    const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-    const [providers, setProviders ] = useState(false)
+    const { data: session } = useSession()
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
+    const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false)
+    const [providers, setProviders] = useState(false)
 
     useEffect(() => {
-        getProviders()
-            .then(data => setProviders(data))
-    }, []);
+        getProviders().then((data) => setProviders(data))
+    }, [])
 
-
-    const pathName = usePathname();
+    const pathName = usePathname()
     const bgGray900 = 'bg-gray-900 '
     const activeLink = (url, pathName, bg = 'bg-black ') => {
         return pathName === url ? bg : ''
     }
-
 
     return (
         <nav className="bg-blue-700 border-b border-blue-500">
@@ -40,7 +37,9 @@ function Navbar(props) {
                             className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                             aria-controls="mobile-menu"
                             aria-expanded="false"
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                            onClick={() =>
+                                setIsMobileMenuOpen(!isMobileMenuOpen)
+                            }>
                             <span className="absolute -inset-0.5"></span>
                             <span className="sr-only">Open main menu</span>
                             <svg
@@ -61,14 +60,18 @@ function Navbar(props) {
 
                     <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
                         {/*Logo*/}
-                        <Link className="flex flex-shrink-0 items-center" href="/">
+                        <Link
+                            className="flex flex-shrink-0 items-center"
+                            href="/">
                             <Image
                                 className="h-10 w-auto"
                                 src={logo}
                                 alt="PropertyPulse"
                             />
 
-                            <span className="hidden md:block text-white text-2xl font-bold ml-2">PropertyPulse</span>
+                            <span className="hidden md:block text-white text-2xl font-bold ml-2">
+                                PropertyPulse
+                            </span>
                         </Link>
 
                         {/*Desktop Menu Hidden below md screens*/}
@@ -76,18 +79,30 @@ function Navbar(props) {
                             <div className="flex space-x-2">
                                 <Link
                                     href="/"
-                                    className={activeLink('/', pathName) + "text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"}>
+                                    className={
+                                        activeLink('/', pathName) +
+                                        'text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
+                                    }>
                                     Home
                                 </Link>
                                 <Link
-                                    href='/properties'
-                                    className={activeLink('/properties', pathName) + "text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"}>
+                                    href="/properties"
+                                    className={
+                                        activeLink('/properties', pathName) +
+                                        'text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
+                                    }>
                                     Properties
                                 </Link>
                                 {session && (
                                     <Link
                                         href="/properties/add"
-                                        className={activeLink('/properties/add', pathName) + "text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"}>
+                                        className={
+                                            activeLink(
+                                                '/properties/add',
+                                                pathName
+                                            ) +
+                                            'text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
+                                        }>
                                         Add Property
                                     </Link>
                                 )}
@@ -99,32 +114,33 @@ function Navbar(props) {
                     {!session && (
                         <div className="hidden md:block md:ml-6">
                             <div className="flex items-center">
-                                {providers && (
+                                {providers &&
                                     Object.values(providers).map((provider) => (
                                         <button
                                             key={provider.name}
                                             onClick={() => signIn(provider.id)}
                                             className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
-                                            <FaGoogle className={"text-white mr-2"}/>
+                                            <FaGoogle
+                                                className={'text-white mr-2'}
+                                            />
                                             <span>Login or Register</span>
                                         </button>
-                                    ))
-                                )}
+                                    ))}
                             </div>
                         </div>
                     )}
 
-
                     {/*Right Side Menu (Logged In)*/}
                     {session && (
-                        <div
-                            className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
                             <Link href="/messages" className="relative group">
                                 <button
                                     type="button"
                                     className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                     <span className="absolute -inset-1.5"></span>
-                                    <span className="sr-only">View notifications</span>
+                                    <span className="sr-only">
+                                        View notifications
+                                    </span>
                                     <svg
                                         className="h-6 w-6"
                                         fill="none"
@@ -139,11 +155,10 @@ function Navbar(props) {
                                         />
                                     </svg>
                                 </button>
-                                <span
-                                    className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-                                2
+                                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+                                    2
                                     {/*Replace with the actual number of notifications*/}
-                            </span>
+                                </span>
                             </Link>
 
                             {/*Profile dropdown button*/}
@@ -155,12 +170,21 @@ function Navbar(props) {
                                         id="user-menu-button"
                                         aria-expanded="false"
                                         aria-haspopup="true"
-                                        onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}>
+                                        onClick={() =>
+                                            setIsProfileMenuOpen(
+                                                !isProfileMenuOpen
+                                            )
+                                        }>
                                         <span className="absolute -inset-1.5"></span>
-                                        <span className="sr-only">Open user menu</span>
+                                        <span className="sr-only">
+                                            Open user menu
+                                        </span>
                                         <Image
                                             className="h-8 w-8 rounded-full"
-                                            src={session.user.image || profileDefault}
+                                            src={
+                                                session.user.image ||
+                                                profileDefault
+                                            }
                                             width={40}
                                             height={40}
                                             alt=""
@@ -171,39 +195,82 @@ function Navbar(props) {
                                 {/*Profile dropdown*/}
                                 <div
                                     id="user-menu"
-                                    className={(isProfileMenuOpen ? "block" : "hidden") + " absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"}
+                                    className={
+                                        (isProfileMenuOpen
+                                            ? 'block'
+                                            : 'hidden') +
+                                        ' absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
+                                    }
                                     role="menu"
                                     aria-orientation="vertical"
                                     aria-labelledby="user-menu-button"
                                     tabIndex="-1">
                                     <Link
                                         href="/profile"
-                                        className={(isProfileDropdownOpen === 'Profile' ? 'bg-gray-100 ' : '') + "block px-4 py-2 text-sm text-gray-700"}
+                                        className={
+                                            (isProfileDropdownOpen === 'Profile'
+                                                ? 'bg-gray-100 '
+                                                : '') +
+                                            'block px-4 py-2 text-sm text-gray-700'
+                                        }
                                         role="menuitem"
                                         tabIndex="-1"
-                                        onClick={() => setIsProfileMenuOpen(false)}
-                                        onMouseEnter={() => setIsProfileDropdownOpen('Profile')}
-                                        onMouseLeave={() => setIsProfileDropdownOpen(false)}
-                                        id="user-menu-item-0">Your Profile</Link>
+                                        onClick={() =>
+                                            setIsProfileMenuOpen(false)
+                                        }
+                                        onMouseEnter={() =>
+                                            setIsProfileDropdownOpen('Profile')
+                                        }
+                                        onMouseLeave={() =>
+                                            setIsProfileDropdownOpen(false)
+                                        }
+                                        id="user-menu-item-0">
+                                        Your Profile
+                                    </Link>
                                     <Link
                                         href="properties/add"
-                                        className={(isProfileDropdownOpen === 'Saved Properties' ? 'bg-gray-100 ' : '') + "block px-4 py-2 text-sm text-gray-700"}
+                                        className={
+                                            (isProfileDropdownOpen ===
+                                            'Saved Properties'
+                                                ? 'bg-gray-100 '
+                                                : '') +
+                                            'block px-4 py-2 text-sm text-gray-700'
+                                        }
                                         role="menuitem"
                                         tabIndex="-1"
-                                        onMouseEnter={() => setIsProfileDropdownOpen('Saved Properties')}
-                                        onMouseLeave={() => setIsProfileDropdownOpen(false)}
-                                        id="user-menu-item-2">Saved Properties</Link>
+                                        onMouseEnter={() =>
+                                            setIsProfileDropdownOpen(
+                                                'Saved Properties'
+                                            )
+                                        }
+                                        onMouseLeave={() =>
+                                            setIsProfileDropdownOpen(false)
+                                        }
+                                        id="user-menu-item-2">
+                                        Saved Properties
+                                    </Link>
                                     <button
-                                        className={(isProfileDropdownOpen === 'Sign Out' ? 'bg-gray-100 ' : '') + "block px-4 py-2 text-sm text-gray-700"}
+                                        className={
+                                            (isProfileDropdownOpen ===
+                                            'Sign Out'
+                                                ? 'bg-gray-100 '
+                                                : '') +
+                                            'block px-4 py-2 text-sm text-gray-700'
+                                        }
                                         role="menuitem"
                                         tabIndex="-1"
                                         onClick={() => {
                                             signOut()
                                             setIsProfileDropdownOpen(false)
                                         }}
-                                        onMouseEnter={() => setIsProfileDropdownOpen('Sign Out')}
-                                        onMouseLeave={() => setIsProfileDropdownOpen(false)}
-                                        id="user-menu-item-2">Sign Out
+                                        onMouseEnter={() =>
+                                            setIsProfileDropdownOpen('Sign Out')
+                                        }
+                                        onMouseLeave={() =>
+                                            setIsProfileDropdownOpen(false)
+                                        }
+                                        id="user-menu-item-2">
+                                        Sign Out
                                     </button>
                                 </div>
                             </div>
@@ -213,38 +280,54 @@ function Navbar(props) {
             </div>
 
             {/*Mobile menu, show/hide based on menu state.*/}
-            <div className={isMobileMenuOpen ? "block" : "hidden"} id="mobile-menu">
+            <div
+                className={isMobileMenuOpen ? 'block' : 'hidden'}
+                id="mobile-menu">
                 <div className="space-y-1 px-2 pb-3 pt-2">
                     <Link
                         href="/"
-                        className={activeLink('/', pathName, bgGray900) + "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"}>
+                        className={
+                            activeLink('/', pathName, bgGray900) +
+                            'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
+                        }>
                         Home
                     </Link>
                     <Link
                         href="/properties"
-                        className={activeLink('/properties', pathName, bgGray900) + "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"}>
+                        className={
+                            activeLink('/properties', pathName, bgGray900) +
+                            'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
+                        }>
                         Properties
                     </Link>
                     {session && (
                         <Link
                             href="/properties/add"
-                            className={activeLink('/properties/add', pathName, bgGray900) + "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"}>
+                            className={
+                                activeLink(
+                                    '/properties/add',
+                                    pathName,
+                                    bgGray900
+                                ) +
+                                'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
+                            }>
                             Add Property
                         </Link>
                     )}
 
                     {!session && (
                         <button
-                            className={"flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4"}>
-                            <FaGoogle className="mr-2"/>
+                            className={
+                                'flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4'
+                            }>
+                            <FaGoogle className="mr-2" />
                             <span> Login or Register</span>
                         </button>
                     )}
-
                 </div>
             </div>
         </nav>
-    );
+    )
 }
 
-export default Navbar;
+export default Navbar

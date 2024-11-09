@@ -3,6 +3,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ![alt text](./public/img.png)
 
 ## Getting Started
+
 This is [Pulse repo](https://github.com/bradtraversy/property-pulse)
 
 First, run the development server:

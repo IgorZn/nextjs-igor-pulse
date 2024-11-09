@@ -1,95 +1,93 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-
-const propertySchema = new Schema({
+const propertySchema = new Schema(
+  {
     owner: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     name: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     type: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     description: {
-        type: String,
+      type: String,
     },
     location: {
-        street: {
-            type: String,
-        },
-        city: {
-            type: String,
-        },
-        state: {
-            type: String,
-        },
-        zipcode: {
-            type: String,
-        },
+      street: {
+        type: String,
+      },
+      city: {
+        type: String,
+      },
+      state: {
+        type: String,
+      },
+      zipcode: {
+        type: String,
+      },
     },
     beds: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
     baths: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
     square_feet: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
     amenities: [
-        {
-            type: String,
-        },
+      {
+        type: String,
+      },
     ],
     rates: {
-        nightly: {
-            type: Number,
-        },
-        weekly: {
-            type: Number,
-        },
-        monthly: {
-            type: Number,
-        },
+      nightly: {
+        type: Number,
+      },
+      weekly: {
+        type: Number,
+      },
+      monthly: {
+        type: Number,
+      },
     },
     seller_info: {
-        name: {
-            type: String,
-        },
-        email: {
-            type: String,
-        },
-        phone: {
-            type: String,
-        },
+      name: {
+        type: String,
+      },
+      email: {
+        type: String,
+      },
+      phone: {
+        type: String,
+      },
     },
     images: [
-        {
-            type: String,
-        },
+      {
+        type: String,
+      },
     ],
     is_featured: {
-        type: Boolean,
-        default: false,
+      type: Boolean,
+      default: false,
     },
     isEnabled: {
-        type: Boolean,
-        default: true,
-    }
+      type: Boolean,
+      default: true,
     },
-{
+  },
+  {
     timestamps: true,
-}
-)
-;
-
+  },
+);
 export const PropertyModel =
-    mongoose.models.Property || mongoose.model('Property', propertySchema)
+  mongoose.models.Property || mongoose.model("Property", propertySchema);

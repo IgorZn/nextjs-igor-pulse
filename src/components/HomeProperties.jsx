@@ -1,12 +1,10 @@
-import PropertiesCard from "@/components/PropertiesCard";
-import Link from "next/link";
+import PropertiesCard from '@/components/PropertiesCard'
+import Link from 'next/link'
 
-function HomeProperties({properties}) {
-
+function HomeProperties({ properties }) {
     const recentProperties = properties
         .sort(() => Math.random() - Math.random())
-        .slice(0, 3);
-
+        .slice(0, 3)
 
     return (
         <>
@@ -21,7 +19,10 @@ function HomeProperties({properties}) {
                             <p>No properties found.</p>
                         ) : (
                             recentProperties.map((property) => (
-                                <PropertiesCard key={property._id} {...property}/>
+                                <PropertiesCard
+                                    key={property._id}
+                                    {...property}
+                                />
                             ))
                         )}
                     </div>
@@ -31,11 +32,12 @@ function HomeProperties({properties}) {
             <section className="m-auto max-w-lg my-10 px-6">
                 <Link
                     href="/properties"
-                    className="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
-                >View All Properties</Link>
+                    className="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700">
+                    View All Properties
+                </Link>
             </section>
         </>
-    );
+    )
 }
 
-export default HomeProperties;
+export default HomeProperties

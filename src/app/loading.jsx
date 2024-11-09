@@ -1,14 +1,15 @@
 'use client'
-import {ScaleLoader} from "react-spinners";
+import { ScaleLoader } from 'react-spinners'
 
 function Loading(props) {
     const override = {
-        display: "block",
-        margin: "100px auto",
+        display: 'block',
+        margin: '100px auto',
     }
 
     return (
-        <div className="container-xl lg:container m-auto text-center">
+        // eslint-disable-next-line tailwindcss/no-custom-classname
+        <div className="container-xl m-auto text-center lg:container">
             <ScaleLoader
                 loading={true}
                 cssOverride={override}
@@ -16,8 +17,7 @@ function Loading(props) {
                 aria-label="Loading Spinner"
             />
         </div>
-
-    );
+    )
 }
 
-export default Loading;
+export default Loading

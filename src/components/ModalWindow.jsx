@@ -1,21 +1,28 @@
-import React from 'react';
+import React from 'react'
 import {
     Button,
     Dialog,
     DialogHeader,
     DialogBody,
     DialogFooter,
-} from "@material-tailwind/react";
+} from '@material-tailwind/react'
 
-function ModalWindow({open, close, onClick, children, title, bodyText, cancelText, confirmText}) {
+function ModalWindow({
+    open,
+    close,
+    onClick,
+    children,
+    title,
+    bodyText,
+    cancelText,
+    confirmText,
+}) {
     return (
         <>
             {children}
             <Dialog open={open} handler={close}>
                 <DialogHeader>{title}</DialogHeader>
-                <DialogBody>
-                    {bodyText}
-                </DialogBody>
+                <DialogBody>{bodyText}</DialogBody>
                 <DialogFooter>
                     <Button
                         variant="text"
@@ -30,7 +37,7 @@ function ModalWindow({open, close, onClick, children, title, bodyText, cancelTex
                 </DialogFooter>
             </Dialog>
         </>
-    );
+    )
 }
 
-export default ModalWindow;
+export default ModalWindow

@@ -1,6 +1,9 @@
-import Navbar from "@/components/Navbar";
-import '@/assets/style/globals.css';
-import SessionWrapper from "@/components/SessionWrapper";
+import Navbar from '@/components/Navbar'
+import '@/assets/style/globals.css'
+import SessionWrapper from '@/components/SessionWrapper'
+
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const metadata = {
     title: 'Igor Property Pulse',
@@ -8,17 +11,18 @@ export const metadata = {
     keywords: 'property,rental,search,find',
 }
 
-const MainLayout = ({children, session}) => {
+const MainLayout = ({ children, session }) => {
     return (
         <SessionWrapper session={session}>
             <html lang="en">
                 <body>
-                    <Navbar/>
+                    <ToastContainer />
+                    <Navbar />
                     <div>{children}</div>
                 </body>
             </html>
         </SessionWrapper>
-    );
+    )
 }
 
-export default MainLayout;
+export default MainLayout

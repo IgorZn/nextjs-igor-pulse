@@ -1,15 +1,13 @@
-'use client'
-import { useRouter } from 'next/navigation'
-import PropertyAddForm from '@/components/PropertyAddForm'
+import React from 'react'
+import PropertyEditForm from '@/components/PropertyEditForm'
 
-function PropertiesAddPage(props) {
-    const router = useRouter()
+function EditPage(props) {
     return (
         <div>
             <section className="bg-blue-50">
                 <div className="container m-auto max-w-2xl py-24">
                     <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-                        <PropertyAddForm />
+                        <PropertyEditForm />
                     </div>
                 </div>
             </section>
@@ -17,4 +15,4 @@ function PropertiesAddPage(props) {
     )
 }
 
-export default PropertiesAddPage
+export default EditPage

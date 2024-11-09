@@ -1,31 +1,34 @@
+'use client'
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
 
-function PropertyAddForm(props) {
+function PropertyEditForm(props) {
+    const { id } = useParams()
     const [mounted, setMounted] = useState(false)
+
     const [fields, setFields] = useState({
-        type: 'Condo',
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        name: 'Beautiful Apartment',
+        type: '',
+        description: '',
+        name: '',
         location: {
             street: '',
             city: '',
             state: '',
             zipcode: '',
         },
-        beds: 10,
-        baths: 110,
-        square_feet: 110, // В JavaScript часто используется camelCase
+        beds: 0,
+        baths: 0,
+        square_feet: 0, // В JavaScript часто используется camelCase
         amenities: [],
         rates: {
-            nightly: 10,
-            weekly: 20,
-            monthly: 30,
+            nightly: 0,
+            weekly: 0,
+            monthly: 0,
         },
         seller_info: {
-            name: 'Igor Zn',
-            email: 'test@abc.com',
-            phone: '+7 (911) 123-45-67',
+            name: '',
+            email: '',
+            phone: '',
         },
         images: [],
     })
@@ -76,15 +79,24 @@ function PropertyAddForm(props) {
 
     useEffect(() => {
         setMounted(true)
+        fetch(`/api/properties/${id}`)
+            .then(async (data) => {
+                const response = await data.json()
+                setFields(response)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
     }, [])
 
+    console.log(fields)
     return (
         mounted && (
             <form
                 action="/api/properties"
-                method={'POST'}
+                method={'PUT'}
                 encType={'multipart/form-data'}>
-                <h2 className="mb-6 text-center text-3xl font-semibold">
+                <h2 className="text-3xl text-center font-semibold mb-6">
                     Add Property
                 </h2>
 
@@ -92,13 +104,13 @@ function PropertyAddForm(props) {
                 <div className="mb-4">
                     <label
                         htmlFor="type"
-                        className="mb-2 block font-bold text-gray-700">
+                        className="block text-gray-700 font-bold mb-2">
                         Property Type
                     </label>
                     <select
                         id="type"
                         name="type"
-                        className="w-full rounded border px-3 py-2"
+                        className="border rounded w-full py-2 px-3"
                         required
                         value={fields.type}
                         onChange={handleOnChange}>
@@ -115,14 +127,14 @@ function PropertyAddForm(props) {
                     </select>
                 </div>
                 <div className="mb-4">
-                    <label className="mb-2 block font-bold text-gray-700">
+                    <label className="block text-gray-700 font-bold mb-2">
                         Listing Name
                     </label>
                     <input
                         type="text"
                         id="name"
                         name="name"
-                        className="mb-2 w-full rounded border px-3 py-2"
+                        className="border rounded w-full py-2 px-3 mb-2"
                         placeholder="eg. Beautiful Apartment In Miami"
                         required
                         value={fields.name}
@@ -132,13 +144,13 @@ function PropertyAddForm(props) {
                 <div className="mb-4">
                     <label
                         htmlFor="description"
-                        className="mb-2 block font-bold text-gray-700">
+                        className="block text-gray-700 font-bold mb-2">
                         Description
                     </label>
                     <textarea
                         id="description"
                         name="description"
-                        className="w-full rounded border px-3 py-2"
+                        className="border rounded w-full py-2 px-3"
                         rows="4"
                         value={fields.description}
                         onChange={handleOnChange}
@@ -147,14 +159,14 @@ function PropertyAddForm(props) {
 
                 {/*Location*/}
                 <div className="mb-4 bg-blue-50 p-4">
-                    <label className="mb-2 block font-bold text-gray-700">
+                    <label className="block text-gray-700 font-bold mb-2">
                         Location
                     </label>
                     <input
                         type="text"
                         id="street"
                         name="location.street"
-                        className="mb-2 w-full rounded border px-3 py-2"
+                        className="border rounded w-full py-2 px-3 mb-2"
                         placeholder="Street"
                         value={fields.location.street}
                         onChange={handleOnChange}
@@ -163,7 +175,7 @@ function PropertyAddForm(props) {
                         type="text"
                         id="city"
                         name="location.city"
-                        className="mb-2 w-full rounded border px-3 py-2"
+                        className="border rounded w-full py-2 px-3 mb-2"
                         placeholder="City"
                         required
                         value={fields.location.city}
@@ -173,7 +185,7 @@ function PropertyAddForm(props) {
                         type="text"
                         id="state"
                         name="location.state"
-                        className="mb-2 w-full rounded border px-3 py-2"
+                        className="border rounded w-full py-2 px-3 mb-2"
                         placeholder="State"
                         required
                         value={fields.location.state}
@@ -183,7 +195,7 @@ function PropertyAddForm(props) {
                         type="text"
                         id="zipcode"
                         name="location.zipcode"
-                        className="mb-2 w-full rounded border px-3 py-2"
+                        className="border rounded w-full py-2 px-3 mb-2"
                         placeholder="Zipcode"
                         value={fields.location.zipcode}
                         onChange={handleOnChange}
@@ -192,17 +204,17 @@ function PropertyAddForm(props) {
 
                 {/*Beds*/}
                 <div className="mb-4 flex flex-wrap">
-                    <div className="w-full pr-2 sm:w-1/3">
+                    <div className="w-full sm:w-1/3 pr-2">
                         <label
                             htmlFor="beds"
-                            className="mb-2 block font-bold text-gray-700">
+                            className="block text-gray-700 font-bold mb-2">
                             Beds
                         </label>
                         <input
                             type="number"
                             id="beds"
                             name="beds"
-                            className="w-full rounded border px-3 py-2"
+                            className="border rounded w-full py-2 px-3"
                             required
                             value={fields.beds}
                             onChange={handleOnChange}
@@ -210,17 +222,17 @@ function PropertyAddForm(props) {
                     </div>
 
                     {/*Baths*/}
-                    <div className="w-full px-2 sm:w-1/3">
+                    <div className="w-full sm:w-1/3 px-2">
                         <label
                             htmlFor="baths"
-                            className="mb-2 block font-bold text-gray-700">
+                            className="block text-gray-700 font-bold mb-2">
                             Baths
                         </label>
                         <input
                             type="number"
                             id="baths"
                             name="baths"
-                            className="w-full rounded border px-3 py-2"
+                            className="border rounded w-full py-2 px-3"
                             required
                             value={fields.baths}
                             onChange={handleOnChange}
@@ -228,17 +240,17 @@ function PropertyAddForm(props) {
                     </div>
 
                     {/*c*/}
-                    <div className="w-full pl-2 sm:w-1/3">
+                    <div className="w-full sm:w-1/3 pl-2">
                         <label
                             htmlFor="square_feet"
-                            className="mb-2 block font-bold text-gray-700">
+                            className="block text-gray-700 font-bold mb-2">
                             Square Feet
                         </label>
                         <input
                             type="number"
                             id="square_feet"
                             name="square_feet"
-                            className="w-full rounded border px-3 py-2"
+                            className="border rounded w-full py-2 px-3"
                             required
                             value={fields.square_feet}
                             onChange={handleOnChange}
@@ -248,10 +260,10 @@ function PropertyAddForm(props) {
 
                 {/*Amenities*/}
                 <div className="mb-4">
-                    <label className="mb-2 block font-bold text-gray-700">
+                    <label className="block text-gray-700 font-bold mb-2">
                         Amenities
                     </label>
-                    <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                         <div>
                             <input
                                 type="checkbox"
@@ -259,6 +271,7 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Wifi"
                                 className="mr-2"
+                                checked={fields.amenities.includes('Wifi')}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_wifi">Wifi</label>
@@ -270,6 +283,9 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Full Kitchen"
                                 className="mr-2"
+                                checked={fields.amenities.includes(
+                                    'Full Kitchen'
+                                )}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_kitchen">
@@ -283,6 +299,9 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Washer & Dryer"
                                 className="mr-2"
+                                checked={fields.amenities.includes(
+                                    'Washer & Dryer'
+                                )}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_washer_dryer">
@@ -296,6 +315,9 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Free Parking"
                                 className="mr-2"
+                                checked={fields.amenities.includes(
+                                    'Free Parking'
+                                )}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_free_parking">
@@ -309,6 +331,9 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Swimming Pool"
                                 className="mr-2"
+                                checked={fields.amenities.includes(
+                                    'Swimming Pool'
+                                )}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_pool">Swimming Pool</label>
@@ -320,6 +345,7 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Hot Tub"
                                 className="mr-2"
+                                checked={fields.amenities.includes('Hot Tub')}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_hot_tub">Hot Tub</label>
@@ -331,6 +357,9 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="24/7 Security"
                                 className="mr-2"
+                                checked={fields.amenities.includes(
+                                    '24/7 Security'
+                                )}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_24_7_security">
@@ -344,6 +373,9 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Wheelchair Accessible"
                                 className="mr-2"
+                                checked={fields.amenities.includes(
+                                    'Wheelchair Accessible'
+                                )}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_wheelchair_accessible">
@@ -357,6 +389,9 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Elevator Access"
                                 className="mr-2"
+                                checked={fields.amenities.includes(
+                                    'Elevator Access'
+                                )}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_elevator_access">
@@ -370,6 +405,9 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Dishwasher"
                                 className="mr-2"
+                                checked={fields.amenities.includes(
+                                    'Dishwasher'
+                                )}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_dishwasher">
@@ -383,6 +421,9 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Gym/Fitness Center"
                                 className="mr-2"
+                                checked={fields.amenities.includes(
+                                    'Gym/Fitness Center'
+                                )}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_gym_fitness_center">
@@ -396,6 +437,9 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Air Conditioning"
                                 className="mr-2"
+                                checked={fields.amenities.includes(
+                                    'Air Conditioning'
+                                )}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_air_conditioning">
@@ -409,6 +453,9 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Balcony/Patio"
                                 className="mr-2"
+                                checked={fields.amenities.includes(
+                                    'Balcony/Patio'
+                                )}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_balcony_patio">
@@ -422,6 +469,7 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Smart TV"
                                 className="mr-2"
+                                checked={fields.amenities.includes('Smart TV')}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_smart_tv">Smart TV</label>
@@ -433,6 +481,9 @@ function PropertyAddForm(props) {
                                 name="amenities"
                                 value="Coffee Maker"
                                 className="mr-2"
+                                checked={fields.amenities.includes(
+                                    'Coffee Maker'
+                                )}
                                 onChange={handleAmenitiesChange}
                             />
                             <label htmlFor="amenity_coffee_maker">
@@ -444,10 +495,10 @@ function PropertyAddForm(props) {
 
                 {/*Rates*/}
                 <div className="mb-4 bg-blue-50 p-4">
-                    <label className="mb-2 block font-bold text-gray-700">
+                    <label className="block text-gray-700 font-bold mb-2">
                         Rates (Leave blank if not applicable)
                     </label>
-                    <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+                    <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
                         {/*Nightly*/}
                         <div className="flex items-center">
                             <label htmlFor="nightly_rate" className="mr-2">
@@ -457,7 +508,7 @@ function PropertyAddForm(props) {
                                 type="number"
                                 id="nightly_rate"
                                 name="rates.nightly"
-                                className="w-full rounded border px-3 py-2"
+                                className="border rounded w-full py-2 px-3"
                                 value={fields.rates.nightly}
                                 onChange={handleOnChange}
                             />
@@ -471,7 +522,7 @@ function PropertyAddForm(props) {
                                 type="number"
                                 id="weekly_rate"
                                 name="rates.weekly"
-                                className="w-full rounded border px-3 py-2"
+                                className="border rounded w-full py-2 px-3"
                                 value={fields.rates.weekly}
                                 onChange={handleOnChange}
                             />
@@ -485,7 +536,7 @@ function PropertyAddForm(props) {
                                 type="number"
                                 id="monthly_rate"
                                 name="rates.monthly"
-                                className="w-full rounded border px-3 py-2"
+                                className="border rounded w-full py-2 px-3"
                                 value={fields.rates.monthly}
                                 onChange={handleOnChange}
                             />
@@ -497,14 +548,14 @@ function PropertyAddForm(props) {
                 <div className="mb-4">
                     <label
                         htmlFor="seller_name"
-                        className="mb-2 block font-bold text-gray-700">
+                        className="block text-gray-700 font-bold mb-2">
                         Seller Name
                     </label>
                     <input
                         type="text"
                         id="seller_name"
                         name="seller_info.name"
-                        className="w-full rounded border px-3 py-2"
+                        className="border rounded w-full py-2 px-3"
                         placeholder="Name"
                         value={fields.seller_info.name}
                         onChange={handleOnChange}
@@ -513,14 +564,14 @@ function PropertyAddForm(props) {
                 <div className="mb-4">
                     <label
                         htmlFor="seller_email"
-                        className="mb-2 block font-bold text-gray-700">
+                        className="block text-gray-700 font-bold mb-2">
                         Seller Email
                     </label>
                     <input
                         type="email"
                         id="seller_email"
                         name="seller_info.email"
-                        className="w-full rounded border px-3 py-2"
+                        className="border rounded w-full py-2 px-3"
                         placeholder="Email address"
                         value={fields.seller_info.email}
                         onChange={handleOnChange}
@@ -530,14 +581,14 @@ function PropertyAddForm(props) {
                 <div className="mb-4">
                     <label
                         htmlFor="seller_phone"
-                        className="mb-2 block font-bold text-gray-700">
+                        className="block text-gray-700 font-bold mb-2">
                         Seller Phone
                     </label>
                     <input
                         type="tel"
                         id="seller_phone"
                         name="seller_info.phone"
-                        className="w-full rounded border px-3 py-2"
+                        className="border rounded w-full py-2 px-3"
                         placeholder="Phone"
                         value={fields.seller_info.phone}
                         onChange={handleOnChange}
@@ -548,14 +599,14 @@ function PropertyAddForm(props) {
                 <div className="mb-4">
                     <label
                         htmlFor="images"
-                        className="mb-2 block font-bold text-gray-700">
+                        className="block text-gray-700 font-bold mb-2">
                         Images (Select up to 4 images)
                     </label>
                     <input
                         type="file"
                         id="images"
                         name="images"
-                        className="w-full rounded border px-3 py-2"
+                        className="border rounded w-full py-2 px-3"
                         accept="image/*"
                         multiple
                         required
@@ -565,9 +616,9 @@ function PropertyAddForm(props) {
 
                 <div>
                     <button
-                        className="focus:shadow-outline w-full rounded-full bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-600 focus:outline-none"
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
                         type="submit">
-                        Add Property
+                        Edit Property
                     </button>
                 </div>
             </form>
@@ -575,4 +626,4 @@ function PropertyAddForm(props) {
     )
 }
 
-export default PropertyAddForm
+export default PropertyEditForm
