@@ -1,10 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 
 function PropertyEditForm(props) {
     const { id } = useParams()
     const [mounted, setMounted] = useState(false)
+    const router = useRouter()
 
     const [fields, setFields] = useState({
         type: '',
@@ -30,7 +31,7 @@ function PropertyEditForm(props) {
             email: '',
             phone: '',
         },
-        images: [],
+        // images: [],
     })
 
     const handleAmenitiesChange = (e) => {
@@ -67,16 +68,6 @@ function PropertyEditForm(props) {
         }
     }
 
-    const handleImageChange = (e) => {
-        const { name, files } = e.target
-        const filesArray = Array.from(files)
-
-        setFields((prevState) => ({
-            ...prevState,
-            [name]: filesArray,
-        }))
-    }
-
     useEffect(() => {
         setMounted(true)
         fetch(`/api/properties/${id}`)
@@ -89,28 +80,40 @@ function PropertyEditForm(props) {
             })
     }, [])
 
-    console.log(fields)
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        await fetch(`/api/properties/${id}/edit`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', },
+            body: JSON.stringify(fields),
+        })
+            .then(async (data) => {
+                router.push(`/properties/${id}`)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }
+
     return (
         mounted && (
-            <form
-                action="/api/properties"
-                method={'PUT'}
-                encType={'multipart/form-data'}>
-                <h2 className="text-3xl text-center font-semibold mb-6">
-                    Add Property
+            <form onSubmit={handleSubmit}>
+
+                <h2 className="mb-6 text-center text-3xl font-semibold">
+                    Edit Property
                 </h2>
 
                 {/*Property Type*/}
                 <div className="mb-4">
                     <label
                         htmlFor="type"
-                        className="block text-gray-700 font-bold mb-2">
+                        className="mb-2 block font-bold text-gray-700">
                         Property Type
                     </label>
                     <select
                         id="type"
                         name="type"
-                        className="border rounded w-full py-2 px-3"
+                        className="w-full rounded border px-3 py-2"
                         required
                         value={fields.type}
                         onChange={handleOnChange}>
@@ -127,14 +130,14 @@ function PropertyEditForm(props) {
                     </select>
                 </div>
                 <div className="mb-4">
-                    <label className="block text-gray-700 font-bold mb-2">
+                    <label className="mb-2 block font-bold text-gray-700">
                         Listing Name
                     </label>
                     <input
                         type="text"
                         id="name"
                         name="name"
-                        className="border rounded w-full py-2 px-3 mb-2"
+                        className="mb-2 w-full rounded border px-3 py-2"
                         placeholder="eg. Beautiful Apartment In Miami"
                         required
                         value={fields.name}
@@ -144,13 +147,13 @@ function PropertyEditForm(props) {
                 <div className="mb-4">
                     <label
                         htmlFor="description"
-                        className="block text-gray-700 font-bold mb-2">
+                        className="mb-2 block font-bold text-gray-700">
                         Description
                     </label>
                     <textarea
                         id="description"
                         name="description"
-                        className="border rounded w-full py-2 px-3"
+                        className="w-full rounded border px-3 py-2"
                         rows="4"
                         value={fields.description}
                         onChange={handleOnChange}
@@ -159,14 +162,14 @@ function PropertyEditForm(props) {
 
                 {/*Location*/}
                 <div className="mb-4 bg-blue-50 p-4">
-                    <label className="block text-gray-700 font-bold mb-2">
+                    <label className="mb-2 block font-bold text-gray-700">
                         Location
                     </label>
                     <input
                         type="text"
                         id="street"
                         name="location.street"
-                        className="border rounded w-full py-2 px-3 mb-2"
+                        className="mb-2 w-full rounded border px-3 py-2"
                         placeholder="Street"
                         value={fields.location.street}
                         onChange={handleOnChange}
@@ -175,7 +178,7 @@ function PropertyEditForm(props) {
                         type="text"
                         id="city"
                         name="location.city"
-                        className="border rounded w-full py-2 px-3 mb-2"
+                        className="mb-2 w-full rounded border px-3 py-2"
                         placeholder="City"
                         required
                         value={fields.location.city}
@@ -185,7 +188,7 @@ function PropertyEditForm(props) {
                         type="text"
                         id="state"
                         name="location.state"
-                        className="border rounded w-full py-2 px-3 mb-2"
+                        className="mb-2 w-full rounded border px-3 py-2"
                         placeholder="State"
                         required
                         value={fields.location.state}
@@ -195,7 +198,7 @@ function PropertyEditForm(props) {
                         type="text"
                         id="zipcode"
                         name="location.zipcode"
-                        className="border rounded w-full py-2 px-3 mb-2"
+                        className="mb-2 w-full rounded border px-3 py-2"
                         placeholder="Zipcode"
                         value={fields.location.zipcode}
                         onChange={handleOnChange}
@@ -204,17 +207,17 @@ function PropertyEditForm(props) {
 
                 {/*Beds*/}
                 <div className="mb-4 flex flex-wrap">
-                    <div className="w-full sm:w-1/3 pr-2">
+                    <div className="w-full pr-2 sm:w-1/3">
                         <label
                             htmlFor="beds"
-                            className="block text-gray-700 font-bold mb-2">
+                            className="mb-2 block font-bold text-gray-700">
                             Beds
                         </label>
                         <input
                             type="number"
                             id="beds"
                             name="beds"
-                            className="border rounded w-full py-2 px-3"
+                            className="w-full rounded border px-3 py-2"
                             required
                             value={fields.beds}
                             onChange={handleOnChange}
@@ -222,17 +225,17 @@ function PropertyEditForm(props) {
                     </div>
 
                     {/*Baths*/}
-                    <div className="w-full sm:w-1/3 px-2">
+                    <div className="w-full px-2 sm:w-1/3">
                         <label
                             htmlFor="baths"
-                            className="block text-gray-700 font-bold mb-2">
+                            className="mb-2 block font-bold text-gray-700">
                             Baths
                         </label>
                         <input
                             type="number"
                             id="baths"
                             name="baths"
-                            className="border rounded w-full py-2 px-3"
+                            className="w-full rounded border px-3 py-2"
                             required
                             value={fields.baths}
                             onChange={handleOnChange}
@@ -240,17 +243,17 @@ function PropertyEditForm(props) {
                     </div>
 
                     {/*c*/}
-                    <div className="w-full sm:w-1/3 pl-2">
+                    <div className="w-full pl-2 sm:w-1/3">
                         <label
                             htmlFor="square_feet"
-                            className="block text-gray-700 font-bold mb-2">
+                            className="mb-2 block font-bold text-gray-700">
                             Square Feet
                         </label>
                         <input
                             type="number"
                             id="square_feet"
                             name="square_feet"
-                            className="border rounded w-full py-2 px-3"
+                            className="w-full rounded border px-3 py-2"
                             required
                             value={fields.square_feet}
                             onChange={handleOnChange}
@@ -260,10 +263,10 @@ function PropertyEditForm(props) {
 
                 {/*Amenities*/}
                 <div className="mb-4">
-                    <label className="block text-gray-700 font-bold mb-2">
+                    <label className="mb-2 block font-bold text-gray-700">
                         Amenities
                     </label>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
                         <div>
                             <input
                                 type="checkbox"
@@ -495,10 +498,10 @@ function PropertyEditForm(props) {
 
                 {/*Rates*/}
                 <div className="mb-4 bg-blue-50 p-4">
-                    <label className="block text-gray-700 font-bold mb-2">
+                    <label className="mb-2 block font-bold text-gray-700">
                         Rates (Leave blank if not applicable)
                     </label>
-                    <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+                    <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                         {/*Nightly*/}
                         <div className="flex items-center">
                             <label htmlFor="nightly_rate" className="mr-2">
@@ -508,7 +511,7 @@ function PropertyEditForm(props) {
                                 type="number"
                                 id="nightly_rate"
                                 name="rates.nightly"
-                                className="border rounded w-full py-2 px-3"
+                                className="w-full rounded border px-3 py-2"
                                 value={fields.rates.nightly}
                                 onChange={handleOnChange}
                             />
@@ -522,7 +525,7 @@ function PropertyEditForm(props) {
                                 type="number"
                                 id="weekly_rate"
                                 name="rates.weekly"
-                                className="border rounded w-full py-2 px-3"
+                                className="w-full rounded border px-3 py-2"
                                 value={fields.rates.weekly}
                                 onChange={handleOnChange}
                             />
@@ -536,7 +539,7 @@ function PropertyEditForm(props) {
                                 type="number"
                                 id="monthly_rate"
                                 name="rates.monthly"
-                                className="border rounded w-full py-2 px-3"
+                                className="w-full rounded border px-3 py-2"
                                 value={fields.rates.monthly}
                                 onChange={handleOnChange}
                             />
@@ -548,14 +551,14 @@ function PropertyEditForm(props) {
                 <div className="mb-4">
                     <label
                         htmlFor="seller_name"
-                        className="block text-gray-700 font-bold mb-2">
+                        className="mb-2 block font-bold text-gray-700">
                         Seller Name
                     </label>
                     <input
                         type="text"
                         id="seller_name"
                         name="seller_info.name"
-                        className="border rounded w-full py-2 px-3"
+                        className="w-full rounded border px-3 py-2"
                         placeholder="Name"
                         value={fields.seller_info.name}
                         onChange={handleOnChange}
@@ -564,14 +567,14 @@ function PropertyEditForm(props) {
                 <div className="mb-4">
                     <label
                         htmlFor="seller_email"
-                        className="block text-gray-700 font-bold mb-2">
+                        className="mb-2 block font-bold text-gray-700">
                         Seller Email
                     </label>
                     <input
                         type="email"
                         id="seller_email"
                         name="seller_info.email"
-                        className="border rounded w-full py-2 px-3"
+                        className="w-full rounded border px-3 py-2"
                         placeholder="Email address"
                         value={fields.seller_info.email}
                         onChange={handleOnChange}
@@ -581,42 +584,23 @@ function PropertyEditForm(props) {
                 <div className="mb-4">
                     <label
                         htmlFor="seller_phone"
-                        className="block text-gray-700 font-bold mb-2">
+                        className="mb-2 block font-bold text-gray-700">
                         Seller Phone
                     </label>
                     <input
                         type="tel"
                         id="seller_phone"
                         name="seller_info.phone"
-                        className="border rounded w-full py-2 px-3"
+                        className="w-full rounded border px-3 py-2"
                         placeholder="Phone"
                         value={fields.seller_info.phone}
                         onChange={handleOnChange}
                     />
                 </div>
 
-                {/*Images*/}
-                <div className="mb-4">
-                    <label
-                        htmlFor="images"
-                        className="block text-gray-700 font-bold mb-2">
-                        Images (Select up to 4 images)
-                    </label>
-                    <input
-                        type="file"
-                        id="images"
-                        name="images"
-                        className="border rounded w-full py-2 px-3"
-                        accept="image/*"
-                        multiple
-                        required
-                        onChange={handleImageChange}
-                    />
-                </div>
-
                 <div>
                     <button
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
+                        className="focus:shadow-outline w-full rounded-full bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-600 focus:outline-none"
                         type="submit">
                         Edit Property
                     </button>

@@ -1,7 +1,7 @@
 'use client'
 
 function Custom404(props) {
-    return <div></div>
+	return <div></div>
 }
 
 export default Custom404

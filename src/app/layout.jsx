@@ -6,23 +6,23 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 export const metadata = {
-    title: 'Igor Property Pulse',
-    description: 'find your perfect hata',
-    keywords: 'property,rental,search,find',
+	title: 'Igor Property Pulse',
+	description: 'find your perfect hata',
+	keywords: 'property,rental,search,find',
 }
 
 const MainLayout = ({ children, session }) => {
-    return (
-        <SessionWrapper session={session}>
-            <html lang="en">
-                <body>
-                    <ToastContainer />
-                    <Navbar />
-                    <div>{children}</div>
-                </body>
-            </html>
-        </SessionWrapper>
-    )
+	return (
+		<SessionWrapper session={session}>
+			<html lang="en">
+				<body>
+					<ToastContainer />
+					<Navbar />
+					<div>{children}</div>
+				</body>
+			</html>
+		</SessionWrapper>
+	)
 }
 
 export default MainLayout
