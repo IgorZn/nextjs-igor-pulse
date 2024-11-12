@@ -10,12 +10,12 @@ function InfoBox({
 }) {
 	return (
 		<>
-			<div className={`${bgColor} p-6 rounded-lg shadow-md`}>
+			<div className={`${bgColor} rounded-lg p-6 shadow-md`}>
 				<h2 className={`${textColor} text-2xl font-bold`}>{heading}</h2>
-				<p className="mt-2 mb-4">{children}</p>
+				<p className="mb-4 mt-2">{children}</p>
 				<Link
 					href={buttonInfo.link}
-					className={`inline-block ${buttonInfo.bgColor} text-white rounded-lg px-4 py-2 hover:opacity-80`}>
+					className={`inline-block ${buttonInfo.bgColor} rounded-lg px-4 py-2 text-white hover:opacity-80`}>
 					{buttonInfo.text}
 				</Link>
 			</div>

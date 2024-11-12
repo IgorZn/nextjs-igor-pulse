@@ -4,11 +4,11 @@ import { useParams, useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 
 function PropertyEditForm(props) {
-    const { id } = useParams()
+	const { id } = useParams()
 	const [mounted, setMounted] = useState(false)
 	const router = useRouter()
 
-    const [fields, setFields] = useState({
+	const [fields, setFields] = useState({
 		type: '',
 		description: '',
 		name: '',
