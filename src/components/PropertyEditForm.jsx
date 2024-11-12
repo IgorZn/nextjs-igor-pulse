@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 function PropertyEditForm(props) {
     const { id } = useParams()
@@ -92,6 +93,7 @@ function PropertyEditForm(props) {
             })
             .catch((error) => {
                 console.error(error)
+                toast.error('Something went wrong')
             })
     }
 
