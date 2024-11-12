@@ -5,20 +5,20 @@ import { getSessionUser } from '@/../utils/getSessionUser'
 import { cloudinaryConfig } from '@/../utils/cloudinary'
 import { v2 as cloudinary } from 'cloudinary'
 
-export const GET = async (request) => {
+export const GET = async request => {
 	await connectDB()
 	return await PropertyModel.find({ isEnabled: true })
-		.then((data) => {
+		.then(data => {
 			return new Response(JSON.stringify(data), {
 				status: 200,
 			})
 		})
-		.catch((error) => {
+		.catch(error => {
 			return new Response('Internal Server Error', { status: 500 })
 		})
 }
 
-export const POST = async (request) => {
+export const POST = async request => {
 	await connectDB()
 	await cloudinaryConfig()
 
@@ -41,7 +41,7 @@ export const POST = async (request) => {
 
 	// Upload images to Cloudinary
 	const uploadedImages = await Promise.all(
-		images.map(async (image) => {
+		images.map(async image => {
 			const buffer = Buffer.from(await image.arrayBuffer()).toString(
 				'base64'
 			)
@@ -89,10 +89,10 @@ export const POST = async (request) => {
 
 	// return NextResponse.json({message: 'Success'}, { status: 201 })
 	return await PropertyModel.create(propertyObj)
-		.then((data) => {
+		.then(data => {
 			return NextResponse.redirect(
 				new URL(`/properties/${data._id}`, request.url)
 			)
 		})
-		.catch((error) => console.log(error))
+		.catch(error => console.log(error))
 }

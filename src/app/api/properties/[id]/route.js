@@ -7,7 +7,7 @@ export const GET = async (request, { params }) => {
 	const { id } = await params
 
 	return PropertyModel.findById(id)
-		.then((data) => {
+		.then(data => {
 			if (!data) return new Response('Not Found', { status: 404 })
 
 			return new Response(JSON.stringify(data), {
@@ -33,7 +33,7 @@ export const DELETE = async (request, { params }) => {
 			{ isEnabled: false },
 			{ new: true }
 		)
-			.then((data) => {
+			.then(data => {
 				return new Response(JSON.stringify({ data }), {
 					status: 200,
 				})

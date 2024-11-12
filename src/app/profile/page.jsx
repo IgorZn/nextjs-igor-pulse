@@ -21,16 +21,16 @@ function ProfilePage(props) {
 	const fetchProperties = async () => {
 		if (session?.user?.id) {
 			return fetch('/api/properties/user/' + session?.user?.id)
-				.then(async (data) => {
+				.then(async data => {
 					setProperties(await data.json())
 				})
-				.catch((e) => toast.error(e.message))
+				.catch(e => toast.error(e.message))
 		} else {
 			return new Response(JSON.stringify([]), { status: 401 })
 		}
 	}
 
-	const handleDelete = async (id) => {
+	const handleDelete = async id => {
 		await fetch('/api/properties/' + id, {
 			method: 'DELETE',
 		})
@@ -86,7 +86,7 @@ function ProfilePage(props) {
 								) : properties.length === 0 ? (
 									<p>No properties found.</p>
 								) : (
-									properties.map((property) => (
+									properties.map(property => (
 										<div
 											key={property._id}
 											className="mb-10">
@@ -151,7 +151,7 @@ function ProfilePage(props) {
 														className="rounded-md bg-red-500 px-3 py-2 text-white hover:bg-red-600"
 														onClick={() =>
 															setOpenModal(
-																(prev) => !prev
+																prev => !prev
 															)
 														}
 														type="button">

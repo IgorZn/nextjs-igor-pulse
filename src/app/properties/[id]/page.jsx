@@ -26,13 +26,13 @@ function Page(props) {
 
 	useEffect(() => {
 		fetchProperty(id)
-			.then((data) => {
+			.then(data => {
 				if (data._id) {
 					setProperty(data)
 					setLoading(false)
 				}
 			})
-			.catch((data) => setProperty(null))
+			.catch(data => setProperty(null))
 	}, [id])
 
 	if (!property._id && !loading) {
@@ -235,11 +235,11 @@ function Page(props) {
 
 								{/*Sidebar*/}
 								<aside className="space-y-4">
-									<ButtonBookmark  property={property}/>
-									<ShareButtons  property={property}/>
+									<ButtonBookmark property={property} />
+									<ShareButtons property={property} />
 
 									{/* Contact Form */}
-									<PropertyContactForm  property={property}/>
+									<PropertyContactForm property={property} />
 								</aside>
 							</div>
 						</div>

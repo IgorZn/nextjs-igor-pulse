@@ -7,7 +7,7 @@ export const metadata = {
 	title: 'Igor Property Pulse Home Page',
 }
 
-const HomePage = async (props) => {
+const HomePage = async props => {
 	const properties = await fetchProperties(process.env.NEXT_PUBLIC_API_URL)
 	return (
 		<>

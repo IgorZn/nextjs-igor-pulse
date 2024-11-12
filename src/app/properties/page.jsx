@@ -1,7 +1,7 @@
 import PropertiesCard from '@/components/PropertiesCard'
 import { fetchProperties } from '@/../utils/fetchMethods'
 
-const PropertiesPage = async (props) => {
+const PropertiesPage = async props => {
 	const properties = await fetchProperties()
 	return (
 		<>
@@ -13,7 +13,7 @@ const PropertiesPage = async (props) => {
 					) : (
 						<div
 							className={'grid grid-cols-1 gap-6 lg:grid-cols-3'}>
-							{properties.map((property) => (
+							{properties.map(property => (
 								<PropertiesCard
 									key={property._id}
 									{...property}

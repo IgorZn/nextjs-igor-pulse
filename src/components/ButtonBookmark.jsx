@@ -3,7 +3,6 @@ import { FaBookmark } from 'react-icons/fa'
 import { addRemoveBookmark } from '../../utils/fetchMethods'
 
 function ButtonBookmark({ property }) {
-
 	return (
 		<button
 			onClick={() => addRemoveBookmark(property._id)}
