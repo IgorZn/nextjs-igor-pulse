@@ -7,8 +7,9 @@ export const dynamic = 'force-dynamic'
 
 export const POST = async req => {
 	await connectDB()
+	// console.log('userBookmarks>>>', await req.json())
 	const { id } = await req.json()
-	let message
+	let message, isBookmarked
 
 	// Получаем сессию
 	const { userId, user } = await getSessionUser()
@@ -24,13 +25,15 @@ export const POST = async req => {
 			userBookmarks.bookmarks.pull(id)
 			userBookmarks.save()
 			message = 'Bookmark removed'
+			isBookmarked = false
 		} else {
 			userBookmarks.bookmarks.push(id)
 			userBookmarks.save()
 			message = 'Bookmark added'
+			isBookmarked = true
 		}
 
-		return NextResponse.json({ message }, { status: 200 })
+		return NextResponse.json({ message, isBookmarked }, { status: 200 })
 	} catch (e) {
 		return NextResponse.json({ message: e.message }, { status: 500 })
 	}

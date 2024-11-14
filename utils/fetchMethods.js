@@ -28,18 +28,19 @@ export const fetchProperty = async id => {
 		})
 }
 
+export const fetchBookmarkStatus = async id => {
+	if (!API_URL) return {}
+	return await fetch(`${API_URL}/api/bookmarks/status/${id}`)
+}
+
 export const addRemoveBookmark = async id => {
 	if (!API_URL) return {}
 
 	return await fetch(`${API_URL}/api/bookmarks/`, {
 		method: 'POST',
 		body: JSON.stringify({ id }),
+	}).catch(error => {
+		console.log(error)
+		return {}
 	})
-		.then(data => {
-			return data.json()
-		})
-		.catch(error => {
-			console.log(error)
-			return {}
-		})
 }

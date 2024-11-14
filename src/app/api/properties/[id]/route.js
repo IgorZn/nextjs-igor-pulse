@@ -1,6 +1,6 @@
 import { PropertyModel } from '@/../models/Property'
 import connectDB from '@/../utils/mongoDB'
-import { getSessionUser } from '../../../../../utils/getSessionUser'
+import { getSessionUser } from '@/../utils/getSessionUser'
 
 export const GET = async (request, { params }) => {
 	await connectDB()
@@ -28,11 +28,7 @@ export const DELETE = async (request, { params }) => {
 	if (!userId) {
 		return new Response('Unauthorized', { status: 401 })
 	} else {
-		return PropertyModel.findByIdAndUpdate(
-			id,
-			{ isEnabled: false },
-			{ new: true }
-		)
+		return PropertyModel.findByIdAndUpdate(id, { isEnabled: false }, { new: true })
 			.then(data => {
 				return new Response(JSON.stringify({ data }), {
 					status: 200,
