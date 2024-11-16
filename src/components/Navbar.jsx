@@ -37,9 +37,7 @@ function Navbar(props) {
 							className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
 							aria-controls="mobile-menu"
 							aria-expanded="false"
-							onClick={() =>
-								setIsMobileMenuOpen(!isMobileMenuOpen)
-							}>
+							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
 							<span className="absolute -inset-0.5"></span>
 							<span className="sr-only">Open main menu</span>
 							<svg
@@ -61,15 +59,9 @@ function Navbar(props) {
 					<div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
 						{/*Logo*/}
 						<Link className="flex shrink-0 items-center" href="/">
-							<Image
-								className="h-10 w-auto"
-								src={logo}
-								alt="PropertyPulse"
-							/>
+							<Image className="h-10 w-auto" src={logo} alt="PropertyPulse" />
 
-							<span className="ml-2 hidden text-2xl font-bold text-white md:block">
-								PropertyPulse
-							</span>
+							<span className="ml-2 hidden text-2xl font-bold text-white md:block">PropertyPulse</span>
 						</Link>
 
 						{/*Desktop Menu Hidden below md screens*/}
@@ -95,10 +87,7 @@ function Navbar(props) {
 									<Link
 										href="/properties/add"
 										className={
-											activeLink(
-												'/properties/add',
-												pathName
-											) +
+											activeLink('/properties/add', pathName) +
 											'text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
 										}>
 										Add Property
@@ -118,9 +107,7 @@ function Navbar(props) {
 											key={provider.name}
 											onClick={() => signIn(provider.id)}
 											className="flex items-center rounded-md bg-gray-700 px-3 py-2 text-white hover:bg-gray-900 hover:text-white">
-											<FaGoogle
-												className={'mr-2 text-white'}
-											/>
+											<FaGoogle className={'mr-2 text-white'} />
 											<span>Login or Register</span>
 										</button>
 									))}
@@ -136,9 +123,7 @@ function Navbar(props) {
 									type="button"
 									className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
 									<span className="absolute -inset-1.5"></span>
-									<span className="sr-only">
-										View notifications
-									</span>
+									<span className="sr-only">View notifications</span>
 									<svg
 										className="size-6"
 										fill="none"
@@ -154,8 +139,7 @@ function Navbar(props) {
 									</svg>
 								</button>
 								<span className="absolute right-0 top-0 inline-flex -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full bg-red-600 px-2 py-1 text-xs font-bold leading-none text-white">
-									2
-									{/*Replace with the actual number of notifications*/}
+									2{/*Replace with the actual number of notifications*/}
 								</span>
 							</Link>
 
@@ -168,21 +152,12 @@ function Navbar(props) {
 										id="user-menu-button"
 										aria-expanded="false"
 										aria-haspopup="true"
-										onClick={() =>
-											setIsProfileMenuOpen(
-												!isProfileMenuOpen
-											)
-										}>
+										onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}>
 										<span className="absolute -inset-1.5"></span>
-										<span className="sr-only">
-											Open user menu
-										</span>
+										<span className="sr-only">Open user menu</span>
 										<Image
 											className="size-8 rounded-full"
-											src={
-												session.user.image ||
-												profileDefault
-											}
+											src={session.user.image || profileDefault}
 											width={40}
 											height={40}
 											alt=""
@@ -194,9 +169,7 @@ function Navbar(props) {
 								<div
 									id="user-menu"
 									className={
-										(isProfileMenuOpen
-											? 'block'
-											: 'hidden') +
+										(isProfileMenuOpen ? 'block' : 'hidden') +
 										' absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
 									}
 									role="menu"
@@ -206,53 +179,33 @@ function Navbar(props) {
 									<Link
 										href="/profile"
 										className={
-											(isProfileDropdownOpen === 'Profile'
-												? 'bg-gray-100 '
-												: '') +
+											(isProfileDropdownOpen === 'Profile' ? 'bg-gray-100 ' : '') +
 											'block px-4 py-2 text-sm text-gray-700'
 										}
 										role="menuitem"
 										tabIndex="-1"
-										onClick={() =>
-											setIsProfileMenuOpen(false)
-										}
-										onMouseEnter={() =>
-											setIsProfileDropdownOpen('Profile')
-										}
-										onMouseLeave={() =>
-											setIsProfileDropdownOpen(false)
-										}
+										onClick={() => setIsProfileMenuOpen(false)}
+										onMouseEnter={() => setIsProfileDropdownOpen('Profile')}
+										onMouseLeave={() => setIsProfileDropdownOpen(false)}
 										id="user-menu-item-0">
 										Your Profile
 									</Link>
 									<Link
-										href="properties/add"
+										href="/properties/saved"
 										className={
-											(isProfileDropdownOpen ===
-											'Saved Properties'
-												? 'bg-gray-100 '
-												: '') +
+											(isProfileDropdownOpen === 'Saved Properties' ? 'bg-gray-100 ' : '') +
 											'block px-4 py-2 text-sm text-gray-700'
 										}
 										role="menuitem"
 										tabIndex="-1"
-										onMouseEnter={() =>
-											setIsProfileDropdownOpen(
-												'Saved Properties'
-											)
-										}
-										onMouseLeave={() =>
-											setIsProfileDropdownOpen(false)
-										}
+										onMouseEnter={() => setIsProfileDropdownOpen('Saved Properties')}
+										onMouseLeave={() => setIsProfileDropdownOpen(false)}
 										id="user-menu-item-2">
 										Saved Properties
 									</Link>
 									<button
 										className={
-											(isProfileDropdownOpen ===
-											'Sign Out'
-												? 'bg-gray-100 '
-												: '') +
+											(isProfileDropdownOpen === 'Sign Out' ? 'bg-gray-100 ' : '') +
 											'block px-4 py-2 text-sm text-gray-700'
 										}
 										role="menuitem"
@@ -261,12 +214,8 @@ function Navbar(props) {
 											signOut()
 											setIsProfileDropdownOpen(false)
 										}}
-										onMouseEnter={() =>
-											setIsProfileDropdownOpen('Sign Out')
-										}
-										onMouseLeave={() =>
-											setIsProfileDropdownOpen(false)
-										}
+										onMouseEnter={() => setIsProfileDropdownOpen('Sign Out')}
+										onMouseLeave={() => setIsProfileDropdownOpen(false)}
 										id="user-menu-item-2">
 										Sign Out
 									</button>
@@ -278,9 +227,7 @@ function Navbar(props) {
 			</div>
 
 			{/*Mobile menu, show/hide based on menu state.*/}
-			<div
-				className={isMobileMenuOpen ? 'block' : 'hidden'}
-				id="mobile-menu">
+			<div className={isMobileMenuOpen ? 'block' : 'hidden'} id="mobile-menu">
 				<div className="space-y-1 px-2 pb-3 pt-2">
 					<Link
 						href="/"
@@ -302,11 +249,7 @@ function Navbar(props) {
 						<Link
 							href="/properties/add"
 							className={
-								activeLink(
-									'/properties/add',
-									pathName,
-									bgGray900
-								) +
+								activeLink('/properties/add', pathName, bgGray900) +
 								'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
 							}>
 							Add Property

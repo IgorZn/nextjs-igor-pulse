@@ -1,11 +1,24 @@
 import React from 'react'
-import { FaShare } from 'react-icons/fa'
+import { usePathname } from 'next/navigation'
+import { EmailIcon, EmailShareButton, TelegramIcon, TelegramShareButton, VKIcon, VKShareButton } from 'react-share'
+import process from 'next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss'
 
 function ShareButtons(props) {
+	const pathname = usePathname()
+	const shareUrl = `${process.env.NEXT_PUBLIC_DOMAIN_URL}${pathname}`
+
 	return (
-		<button className="flex w-full items-center justify-center rounded-full bg-orange-500 px-4 py-2 font-bold text-white hover:bg-orange-600">
-			<FaShare className={'mr-2'} /> Share Property
-		</button>
+		<div className="flex w-full items-center justify-center rounded-full px-4 py-2">
+			<VKShareButton url={shareUrl} className={'mr-1'}>
+				<VKIcon size={32} round={true} />
+			</VKShareButton>
+			<TelegramShareButton url={shareUrl} className={'mr-1'}>
+				<TelegramIcon size={32} round={true} />
+			</TelegramShareButton>
+			<EmailShareButton url={shareUrl} className={'mr-1'}>
+				<EmailIcon size={32} round={true} />
+			</EmailShareButton>
+		</div>
 	)
 }
 

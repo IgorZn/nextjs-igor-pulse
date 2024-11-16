@@ -1,21 +1,19 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { FaBookmark } from 'react-icons/fa'
-import { addRemoveBookmark, fetchBookmarkStatus } from '../../utils/fetchMethods'
+import { fetchBookmarkStatus } from '../../utils/fetchMethods'
 import { useSession } from 'next-auth/react'
 import { toast } from 'react-toastify'
+import { useHandleBookmark } from '../../utils/hooks'
 
 function ButtonBookmark({ property }) {
-	const [isBookmarked, setIsBookmarked] = useState(false)
+	const [loading, setLoading] = useState(true)
 	const { status } = useSession()
+	const { isBookmarked, setIsBookmarked, handleBookmark, message } = useHandleBookmark(property._id)
 
-	const handleBookmark = async () => {
-		if (status !== 'authenticated') return toast.error('Please sign in to bookmark a property')
-		const res = await addRemoveBookmark(property._id)
-		const { message, isBookmarked: bookmarked } = await res.json()
-		setIsBookmarked(bookmarked)
-		toast.info(message)
-	}
+	useEffect(() => {
+		if (message.length > 0) message.includes('added') ? toast.success(message) : toast.info(message)
+	}, [message])
 
 	useEffect(() => {
 		if (status === 'authenticated') {
@@ -23,8 +21,14 @@ function ButtonBookmark({ property }) {
 				const { isBookmarked } = await res.json()
 				setIsBookmarked(isBookmarked)
 			})
+		} else {
+			return
 		}
-	}, [])
+
+		setLoading(!loading)
+	}, [property._id, status])
+
+	if (loading) return <p className={'text-center'}>Loading...</p>
 
 	return isBookmarked ? (
 		<button

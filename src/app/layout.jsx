@@ -15,6 +15,7 @@ const MainLayout = ({ children, session }) => {
 	return (
 		<SessionWrapper session={session}>
 			<html lang="en">
+				<link rel="icon" href="/favicon.ico" sizes="any" />
 				<body>
 					<ToastContainer />
 					<Navbar />

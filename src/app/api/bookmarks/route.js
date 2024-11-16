@@ -7,7 +7,6 @@ export const dynamic = 'force-dynamic'
 
 export const POST = async req => {
 	await connectDB()
-	// console.log('userBookmarks>>>', await req.json())
 	const { id } = await req.json()
 	let message, isBookmarked
 
@@ -37,4 +36,18 @@ export const POST = async req => {
 	} catch (e) {
 		return NextResponse.json({ message: e.message }, { status: 500 })
 	}
+}
+
+export const GET = async (request, { params }) => {
+	await connectDB()
+	const { userId, user } = await getSessionUser()
+
+	return await User.findById({ _id: userId }, 'bookmarks')
+		.populate('bookmarks')
+		.then(data => {
+			return NextResponse.json({ bookmarks: data.bookmarks }, { status: 200 })
+		})
+		.catch(error => {
+			return NextResponse.json({ message: error.message }, { status: 500 })
+		})
 }

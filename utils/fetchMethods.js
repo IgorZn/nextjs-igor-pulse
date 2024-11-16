@@ -44,3 +44,8 @@ export const addRemoveBookmark = async id => {
 		return {}
 	})
 }
+
+export const getSavedBookmarks = async () => {
+	if (!API_URL) return []
+	return await fetch(`${API_URL}/api/bookmarks`)
+}
