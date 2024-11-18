@@ -1,22 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaPaperPlane } from 'react-icons/fa'
+import { useSession } from 'next-auth/react'
 
-function PropertyContactForm(props) {
+function PropertyContactForm({ property }) {
+	const {
+		data: {
+			user: { id: senderId },
+		},
+	} = useSession()
+
+	const [loading, setLoading] = useState(false)
+	const [fields, setFields] = useState({
+		name: '',
+		email: '',
+		phone: '',
+		message: '',
+	})
+
+	const handleChange = e => {
+		e.preventDefault()
+		setFields({
+			...fields,
+			[e.target.name]: e.target.value,
+		})
+	}
+
+	const handleSubmit = e => {
+		e.preventDefault()
+		setFields({
+			...fields,
+			receiver: property.owner,
+			sender: senderId,
+		})
+		console.log('fields_handleSubmit>>>', fields)
+	}
+
 	return (
 		<>
 			{/* Contact Form */}
 			<div className="rounded-lg bg-white p-6 shadow-md">
-				<h3 className="mb-6 text-xl font-bold">
-					Contact Property Manager
-				</h3>
-				<form>
+				<h3 className="mb-6 text-xl font-bold">Contact Property Manager</h3>
+				<form onSubmit={handleSubmit} onChange={handleChange}>
 					<div className="mb-4">
-						<label
-							className="mb-2 block text-sm font-bold text-gray-700"
-							htmlFor="name">
+						<label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="name">
 							Name:
 						</label>
 						<input
+							name={'name'}
 							className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 							id="name"
 							type="text"
@@ -25,41 +55,38 @@ function PropertyContactForm(props) {
 						/>
 					</div>
 					<div className="mb-4">
-						<label
-							className="mb-2 block text-sm font-bold text-gray-700"
-							htmlFor="email">
+						<label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="email">
 							Email:
 						</label>
 						<input
 							className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 							id="email"
+							name={'email'}
 							type="email"
 							placeholder="Enter your email"
 							required
 						/>
 					</div>
 					<div className="mb-4">
-						<label
-							className="mb-2 block text-sm font-bold text-gray-700"
-							htmlFor="phone">
+						<label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="phone">
 							Phone:
 						</label>
 						<input
 							className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 							id="phone"
+							name={'phone'}
 							type="text"
 							placeholder="Enter your phone number"
 						/>
 					</div>
 					<div className="mb-4">
-						<label
-							className="mb-2 block text-sm font-bold text-gray-700"
-							htmlFor="message">
+						<label className="mb-2 block text-sm font-bold text-gray-700" htmlFor="message">
 							Message:
 						</label>
 						<textarea
 							className="focus:shadow-outline h-44 w-full appearance-none rounded border px-3 py-2 text-gray-700 shadow focus:outline-none"
 							id="message"
+							name={'message'}
 							placeholder="Enter your message"></textarea>
 					</div>
 					<div>
