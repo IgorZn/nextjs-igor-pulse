@@ -49,3 +49,14 @@ export const getSavedBookmarks = async () => {
 	if (!API_URL) return []
 	return await fetch(`${API_URL}/api/bookmarks`)
 }
+
+export const sendMessage = async data => {
+	if (!API_URL) return {}
+	return await fetch(`${API_URL}/api/messages`, {
+		method: 'POST',
+		body: JSON.stringify(data),
+	}).catch(error => {
+		console.log(error)
+		return {}
+	})
+}
