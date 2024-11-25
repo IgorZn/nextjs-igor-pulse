@@ -60,3 +60,13 @@ export const sendMessage = async data => {
 		return {}
 	})
 }
+
+export const markMessageAsRead = async id => {
+	if (!API_URL) return {}
+	return await fetch(`${API_URL}/api/messages/${id}`, {
+		method: 'PUT',
+	}).catch(error => {
+		console.log(error)
+		return {}
+	})
+}

@@ -6,7 +6,21 @@ import { Message } from '@/../models/Message'
 export const dynamic = 'force-dynamic'
 
 export const GET = async (request, { params }) => {
-	const { id } = params
+	await connectDB()
+
+	// Получаем сессию
+	const { userId, user } = await getSessionUser()
+
+	// Проверяем, что пользователь авторизован
+	if (!userId || !user) {
+		return NextResponse.json({ message: 'User ID is required' }, { status: 401 })
+	}
+
+	return Message.find({ receiver: userId })
+		.populate('sender receiver property')
+		.then(data => {
+			return NextResponse.json({ messages: data }, { status: 200 })
+		})
 }
 
 export const POST = async (request, { params }) => {

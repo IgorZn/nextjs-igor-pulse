@@ -1,15 +1,14 @@
 import connectDB from '@/../utils/mongoDB'
 import { PropertyModel } from '@/../models/Property'
+import { NextResponse } from 'next/server'
 
 export const GET = async (request, { params }) => {
 	await connectDB()
-	return await PropertyModel.find({ owner: params.userId, isEnabled: true })
+	return PropertyModel.find({ owner: params.userId, isEnabled: true })
 		.then(data => {
-			return new Response(JSON.stringify(data), {
-				status: 200,
-			})
+			return NextResponse.json(data, { status: 200 })
 		})
 		.catch(error => {
-			return new Response('Internal Server Error111', { status: 500 })
+			return NextResponse.json({ message: error.message }, { status: 500 })
 		})
 }

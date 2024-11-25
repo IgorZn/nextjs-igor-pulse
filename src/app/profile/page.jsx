@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 import profileDefault from '@/assets/images/profile.png'
 import ModalWindow from '@/components/ModalWindow'
 import { toast } from 'react-toastify'
+import { NextResponse } from 'next/server'
 
 function ProfilePage(props) {
 	const { data: session } = useSession()
@@ -22,11 +23,12 @@ function ProfilePage(props) {
 		if (session?.user?.id) {
 			return fetch('/api/properties/user/' + session?.user?.id)
 				.then(async data => {
+					// console.log('fetchProperties>>>', await data.json())
 					setProperties(await data.json())
 				})
 				.catch(e => toast.error(e.message))
 		} else {
-			return new Response(JSON.stringify([]), { status: 401 })
+			return NextResponse.json({ message: 'User ID or User not found' }, { status: 401 })
 		}
 	}
 

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "lint-staged": {
-    "/src/**/*.(js|jsx|ts|tsx)": [
+    "src/**/*.(js|jsx|ts|tsx)": [
       "prettier --write"
     ]
   },

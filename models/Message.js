@@ -32,6 +32,10 @@ const messageSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
+		isDeleted: {
+			type: Boolean,
+			default: false,
+		},
 		message: {
 			type: String,
 			required: true,
