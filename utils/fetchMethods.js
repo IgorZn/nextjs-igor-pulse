@@ -70,3 +70,11 @@ export const markMessageAsRead = async id => {
 		return {}
 	})
 }
+
+export const fetchCountNewMessages = async () => {
+	if (!API_URL) return {}
+	return await fetch(`${API_URL}/api/messages/count-new`).catch(error => {
+		console.log(error)
+		return {}
+	})
+}

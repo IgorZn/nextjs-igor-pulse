@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar'
 import '@/assets/style/globals.css'
 import SessionWrapper from '@/components/SessionWrapper'
+import { MessageCountContextProvider } from '@/context/GlobalContext'
 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -14,14 +15,16 @@ export const metadata = {
 const MainLayout = ({ children, session }) => {
 	return (
 		<SessionWrapper session={session}>
-			<html lang="en">
-				<link rel="icon" href="/favicon.ico" sizes="any" />
-				<body>
-					<ToastContainer />
-					<Navbar />
-					<div>{children}</div>
-				</body>
-			</html>
+			<MessageCountContextProvider>
+				<html lang="en">
+					<link rel="icon" href="/favicon.ico" sizes="any" />
+					<body>
+						<ToastContainer />
+						<Navbar />
+						<div>{children}</div>
+					</body>
+				</html>
+			</MessageCountContextProvider>
 		</SessionWrapper>
 	)
 }

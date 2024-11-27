@@ -8,7 +8,7 @@ export const GET = async (request, { params }) => {
 
 	return PropertyModel.findById(id)
 		.then(data => {
-			console.log(id, 'data>>>', data)
+			// console.log(id, 'data>>>', data)
 			if (!data) return new Response('Not Found', { status: 404 })
 
 			return new Response(JSON.stringify(data), {

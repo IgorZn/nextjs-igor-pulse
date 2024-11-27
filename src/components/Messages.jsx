@@ -3,8 +3,10 @@ import Loading from '@/app/loading'
 import Link from 'next/link'
 import { markMessageAsRead } from '../../utils/fetchMethods'
 import { toast } from 'react-toastify'
+import { useMessageCountContext } from '@/context/GlobalContext'
 
 function Messages(props) {
+	const { unreadCount, setUnreadCount } = useMessageCountContext()
 	const [messages, setMessages] = useState([])
 	const [newMessages, setNewMessages] = useState([])
 	const [readMessages, setReadMessages] = useState([])
@@ -17,6 +19,7 @@ function Messages(props) {
 		return markMessageAsRead(e.target.id).then(res => {
 			setIsRead(!isRead)
 			setMessages(() => messages.filter(message => message._id !== e.target.id))
+			setUnreadCount(prev => prev - 1)
 			toast.success('Mark as read')
 		})
 	}
@@ -44,14 +47,14 @@ function Messages(props) {
 		fetch('/api/messages')
 			.then(async data => await data.json())
 			.then(json => {
-				console.log(json.messages)
 				setMessages(json.messages.filter(item => item.isDeleted === false))
+				setUnreadCount(json.messages.filter(item => item.isRead === false).length)
 				setIsReadCount(
-					json.messages.filter(item => item.isRead === true).filter(item => item.isDeleted === true).length
+					json.messages.filter(item => item.isRead === true).filter(item => item.isDeleted === false).length
 				)
-				setLoading(!loading)
+				setLoading(false)
 			})
-	}, [])
+	}, [unreadCount])
 
 	return (
 		<>
@@ -87,7 +90,11 @@ function Messages(props) {
 								.map(message => (
 									<div className="space-y-4" key={message._id}>
 										<div className="relative rounded-md border border-gray-200 bg-white p-4 shadow-md">
-											<div className={'absolute right-2 top-1 rounded bg-amber-400 p-2'}>New</div>
+											{!message.isRead && (
+												<div className={'absolute right-2 top-1 rounded bg-amber-400 p-2'}>
+													New
+												</div>
+											)}
 											<h2 className="mb-4 text-xl">
 												<span className="font-bold">Property Inquiry:</span>
 												{message.property.name}
