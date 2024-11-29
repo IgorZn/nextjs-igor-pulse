@@ -2,10 +2,10 @@ import 'dotenv/config'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || null
 
-export const fetchProperties = async () => {
+export const fetchProperties = async (page = 1, pageSize = 3) => {
 	if (!API_URL) return []
 
-	return await fetch(`${API_URL}/api/properties`, { cache: 'no-store' })
+	return await fetch(`${API_URL}/api/properties?page=${page}&pageSize=${pageSize}`, { cache: 'no-store' })
 		.then(data => {
 			return data.json()
 		})

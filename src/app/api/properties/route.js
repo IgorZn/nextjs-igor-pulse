@@ -7,14 +7,22 @@ import { v2 as cloudinary } from 'cloudinary'
 
 export const GET = async request => {
 	await connectDB()
+	const searchParams = request.nextUrl.searchParams
+	const page = searchParams.get('page') || 1
+	const pageSize = searchParams.get('pageSize') || 3
+
+	const skip = page * pageSize - pageSize
+	const limit = pageSize
+	const total = await PropertyModel.countDocuments({ isEnabled: true })
+
 	return await PropertyModel.find({ isEnabled: true })
+		.skip(skip)
+		.limit(limit)
 		.then(data => {
-			return new Response(JSON.stringify(data), {
-				status: 200,
-			})
+			return NextResponse.json({ properties: data, total }, { status: 200 })
 		})
 		.catch(error => {
-			return new Response('Internal Server Error', { status: 500 })
+			return NextResponse.json({ message: error.message }, { status: 500 })
 		})
 }
 
@@ -28,10 +36,7 @@ export const POST = async request => {
 	const { userId, user } = await getSessionUser()
 
 	if (!userId || !user) {
-		return NextResponse.json(
-			{ message: 'User ID or User not found' },
-			{ status: 401 }
-		)
+		return NextResponse.json({ message: 'User ID or User not found' }, { status: 401 })
 	}
 
 	// console.log('getServerSession>>>', user)
@@ -42,15 +47,10 @@ export const POST = async request => {
 	// Upload images to Cloudinary
 	const uploadedImages = await Promise.all(
 		images.map(async image => {
-			const buffer = Buffer.from(await image.arrayBuffer()).toString(
-				'base64'
-			)
-			const res = await cloudinary.uploader.upload(
-				'data:image/png;base64,' + buffer,
-				{
-					asset_folder: 'pulse-images',
-				}
-			)
+			const buffer = Buffer.from(await image.arrayBuffer()).toString('base64')
+			const res = await cloudinary.uploader.upload('data:image/png;base64,' + buffer, {
+				asset_folder: 'pulse-images',
+			})
 			return res.secure_url
 		})
 	)
@@ -90,9 +90,7 @@ export const POST = async request => {
 	// return NextResponse.json({message: 'Success'}, { status: 201 })
 	return await PropertyModel.create(propertyObj)
 		.then(data => {
-			return NextResponse.redirect(
-				new URL(`/properties/${data._id}`, request.url)
-			)
+			return NextResponse.redirect(new URL(`/properties/${data._id}`, request.url))
 		})
 		.catch(error => console.log(error))
 }

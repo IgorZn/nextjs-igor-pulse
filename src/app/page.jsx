@@ -8,7 +8,7 @@ export const metadata = {
 }
 
 const HomePage = async props => {
-	const properties = await fetchProperties(process.env.NEXT_PUBLIC_API_URL)
+	const { properties } = await fetchProperties(process.env.NEXT_PUBLIC_API_URL)
 	return (
 		<>
 			<Hero />
